@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RegistryManagerClient.View.Pages"
-      xmlns:ex="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+
       mc:Ignorable="d" 
       d:DesignHeight="980" d:DesignWidth="1400"
       Title="HomePage">
@@ -13,8 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Начать работу"
             Grid.Row="0"
@@ -28,6 +28,7 @@
             Orientation="Horizontal"
             Grid.Row="1"
             HorizontalAlignment="Center">
+            
             <Button
                 x:Name="LoadFileButton"
                 Grid.Row="1"
@@ -46,13 +47,10 @@
                     Orientation="Vertical"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
-                    <TextBlock
-                        FontFamily="{StaticResource SegoeFluentIcons}"
-                        FontSize="60"
-                        Background="Transparent"
+                    <ui:SymbolIcon 
+                        Symbol="DocumentArrowUp20"
                         Foreground="{StaticResource PrimaryColor}"
-                        Text="&#xe8e5;"
-                        HorizontalAlignment="Center"/>
+                        FontSize="70"/>
                     <TextBlock
                         FontFamily="Inter"
                         FontSize="16"
@@ -82,15 +80,12 @@
                 <StackPanel
                     Orientation="Vertical"
                     VerticalAlignment="Center"
-                    HorizontalAlignment="Center">       
-                    <TextBlock
-                        FontFamily="{StaticResource SegoeFluentIcons}"
-                        FontSize="60"
-                        Background="Transparent"
+                    HorizontalAlignment="Center">
+                    <ui:SymbolIcon 
+                        Symbol="DocumentTable24"
                         Foreground="{StaticResource PrimaryColor}"
-                        Text="&#xe9f9;"
-                        HorizontalAlignment="Center"/>
-                            <TextBlock
+                        FontSize="70"/>
+                    <TextBlock
                         FontFamily="Inter"
                         FontSize="16"
                         FontWeight="Bold"
@@ -99,7 +94,7 @@
                         TextAlignment="Center"
                         HorizontalAlignment="Center"
                         TextWrapping="Wrap"
-                        Padding="10"/>      
+                        Padding="10"/>
                 </StackPanel>
             </Button>
             <Button
@@ -120,13 +115,10 @@
                     Orientation="Vertical"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
-                    <TextBlock
-                        FontFamily="{StaticResource SegoeFluentIcons}"
-                        FontSize="60"
-                        Background="Transparent"
+                    <ui:SymbolIcon 
+                        Symbol="DocumentAdd24"
                         Foreground="{StaticResource PrimaryColor}"
-                        Text="&#xed0e;"
-                        HorizontalAlignment="Center"/>
+                        FontSize="70"/>
                     <TextBlock
                         FontFamily="Inter"
                         FontSize="16"
@@ -157,13 +149,10 @@
                     Orientation="Vertical"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
-                    <TextBlock
-                        FontFamily="{StaticResource SegoeFluentIcons}"
-                        FontSize="60"
-                        Background="Transparent"
+                    <ui:SymbolIcon 
+                        Symbol="Cloud24"
                         Foreground="{StaticResource PrimaryColor}"
-                        Text="&#xe753;"
-                        HorizontalAlignment="Center"/>
+                        FontSize="70"/>
                     <TextBlock
                         FontFamily="Inter"
                         FontSize="16"
@@ -184,7 +173,8 @@
                 BorderThickness="3"
                 Margin="40 0 40 0"
                 Width="150"
-                Height="150">
+                Height="150"
+                Padding="0">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -194,13 +184,10 @@
                     Orientation="Vertical"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
-                    <TextBlock
-                        FontFamily="{StaticResource SegoeFluentIcons}"
-                        FontSize="60"
-                        Background="Transparent"
+                    <ui:SymbolIcon 
+                        Symbol="PeopleTeam24"
                         Foreground="{StaticResource PrimaryColor}"
-                        Text="&#xe716;"
-                        HorizontalAlignment="Center"/>
+                        FontSize="70"/>
                     <TextBlock
                         FontFamily="Inter"
                         FontSize="16"
@@ -215,21 +202,139 @@
             </Button>
         </StackPanel>
         <StackPanel
+            Background="White"
+            Grid.Row="2">
+        <StackPanel
+            Margin="20"
             Orientation="Horizontal"
             Grid.Row="2"
             HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+                <TextBlock
+                    Text="Недавние реестры"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    FontFamily="Inter"
+                    Foreground="Black"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Padding="0 0 20 0"/>
+            
+                <ui:AutoSuggestBox
+                    PlaceholderText="Название реестра"
+                    Width="200"
+                    BorderBrush="{StaticResource PrimaryColor}"
+                    FontFamily="Inter"
+                    FontSize="16">
+                    <ui:AutoSuggestBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </ui:AutoSuggestBox.Resources>
+                </ui:AutoSuggestBox>
+                
+
+            
+        </StackPanel>
+        <StackPanel
+            Orientation="Vertical"
+            HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            Background="White">
-            <TextBlock
-                Text="Недавние реестры"
-                FontSize="20"
-                FontWeight="Bold"
-                FontFamily="Inter"
-                Foreground="Black"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Padding="20"/>
-            <ex:Inp
+            Grid.Row="3">
+                <Grid Margin="20 0 20 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="Реестр"
+                        FontSize="16"
+                        FontFamily="Inter"
+                        VerticalAlignment="Center"/>
+
+                    <ComboBox 
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Padding="5 0 0 0"
+                        x:Name="StatusComboBox"
+                        Width="200"
+                        Text="Все статусы"
+                        FontFamily="Inter" 
+                        IsEditable="True" 
+                        FontSize="16"
+                        Background="White"
+                        BorderBrush="{StaticResource PrimaryColor}"
+                        BorderThickness="1">
+                        <ComboBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
+
+                    <DatePicker 
+                        x:Name="LastChangeDatePicker"
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Width="200" 
+                        Padding="0"
+                        FirstDayOfWeek="Monday" 
+                        DisplayDateStart="01/01/2024"
+                        IsTodayHighlighted="True"
+                        SelectedDateFormat="Short"
+                        FontFamily="Inter"
+                        FontSize="16">
+                        <DatePicker.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                            <Style TargetType="Calendar">
+                                <Setter Property="SelectionMode" Value="SingleRange"/>
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
+
+                    <ComboBox 
+                        Grid.Row="0"
+                        Grid.Column="3"
+                        x:Name="EditorComboBox"
+                        Width="200"
+                        Padding="5 0 0 0"
+                        Text="Все авторы"
+                        FontFamily="Inter" 
+                        IsEditable="True" 
+                        FontSize="16"
+                        Background="White"
+                        BorderBrush="{StaticResource PrimaryColor}"
+                        BorderThickness="2">
+                        <ComboBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
+
+                    <ui:DataGrid
+                        Grid.Row="1"
+                        Grid.ColumnSpan="4"
+                        HeadersVisibility="None"
+                        x:Name="RecentRegistriesDataGrid"
+                        AutoGenerateColumns="True"
+                        Background="Transparent"
+                        FontFamily="Inter"
+                        FontSize="16"/>
+                </Grid>
+            </StackPanel>
+            
         </StackPanel>
     </Grid>
 

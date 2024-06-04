@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RegistryManagerClient"
-        xmlns:ex="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
         Title="Менеджер реестров" Width="1440" Height="1024"
         WindowState="Maximized">
@@ -29,32 +29,20 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Left">
 
-                <Button 
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    BorderThickness="0"
-                    Height="40 px"
-                    Width="40 px"
-                    Content="&#xe80f;"
-                    FontFamily="{StaticResource SegoeFluentIcons}"
-                    FontSize="30"
-                    Foreground="{StaticResource PrimaryColor}"
-                    Margin="0 0 20 0">
-                </Button>
-                <Button 
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    Height="40 px"
-                    Width="40 px"
-                    Content="&#xe792;"
-                    FontFamily="{StaticResource SegoeFluentIcons}"
-                    FontSize="30"
-                    Foreground="{StaticResource PrimaryColor}">         
-                </Button>
+                <ui:Button Margin="0 0 30 0" Width="50" Height="50">
+                    <ui:SymbolIcon 
+                        Symbol="Home12" 
+                        FontSize="25"
+                        HorizontalAlignment="Center"/>
+                </ui:Button>
+
+                <ui:Button Width="50" Height="50">
+                    <ui:SymbolIcon 
+                        Symbol="Save16"
+                        FontSize="25"
+                        HorizontalAlignment="Center"/>
+                </ui:Button>
+                
             </StackPanel>
             <TextBlock 
                 Text="Filename"
@@ -75,13 +63,11 @@
                     FontFamily="Inter"
                     FontSize="16"
                     Foreground="{StaticResource PrimaryColor}"
-                    Margin="10 0 20 0"/>
-                <Button 
-                    FontFamily="{StaticResource SegoeFluentIcons}"
-                    FontSize="16"
-                    Background="Transparent"
-                    Foreground="{StaticResource PrimaryColor}"
-                    Content="&#xe779;"/>
+                    Margin="10 0 20 0"
+                    VerticalAlignment="Center"/>
+                <ui:SymbolIcon 
+                    Symbol="PersonCircle32"
+                    FontSize="25"/>
             </StackPanel>
         </Grid>
         <Frame 

@@ -1,5 +1,8 @@
-﻿using RegistryManagerClient.View.Pages;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-namespace RegistryManagerClient
+namespace RegistryManagerClient.View.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для CalculationsPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CalculationsPage : Page
     {
-        public MainWindow()
+        public CalculationsPage()
         {
             InitializeComponent();
-            MainFrame.Navigate(new HomePage());
         }
     }
 }

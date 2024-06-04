@@ -24,5 +24,7 @@ namespace RegistryManagerClient.View.Pages
         {
             InitializeComponent();
         }
+
+        
     }
 }
