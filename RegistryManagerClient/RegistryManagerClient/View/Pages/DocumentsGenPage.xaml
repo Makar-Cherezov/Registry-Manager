@@ -1,0 +1,129 @@
+﻿<Page x:Class="RegistryManagerClient.View.Pages.DocumentsGenPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RegistryManagerClient.View.Pages"
+      mc:Ignorable="d" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:cosm="clr-namespace:RegistryManagerClient.Cosmetics"
+      d:DesignHeight="450" d:DesignWidth="1110"
+      Title="DocumentsGenPage">
+
+    <StackPanel Orientation="Vertical"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Margin="20 20 20 20"
+                CanVerticallyScroll="True">
+        <ui:CardExpander Background="White"
+                         ContentPadding="0"
+                         Margin="0 0 0 20">
+            <ui:CardExpander.Header>
+                <ui:TextBlock
+                            Grid.Column="0"
+                            FontFamily="Inter"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Text="Основная информация" />
+            </ui:CardExpander.Header>
+            <StackPanel Background="White"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                        Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <ui:AutoSuggestBox x:Name="ForwarderBox"
+                                       FontFamily="Inter"
+                                       FontSize="14"
+                                       Width="300"
+                                       PlaceholderText="Экспедитор"
+                                       Margin="20 10 20 20"/>
+                    <ui:AutoSuggestBox x:Name="SenderBox"
+                                       FontFamily="Inter"
+                                       FontSize="14"
+                                       Width="300"
+                                       PlaceholderText="Экспедитор"
+                                       Margin="0 10 20 20"/>
+                    <ui:AutoSuggestBox x:Name="ReceiverBox"
+                                       FontFamily="Inter"
+                                       FontSize="14"
+                                       Width="300"
+                                       PlaceholderText="Экспедитор"
+                                       Margin="0 10 20 20"/>
+
+
+                </StackPanel>
+            </StackPanel>
+        </ui:CardExpander>
+
+        <ui:CardExpander Background="White"
+                         ContentPadding="0"
+                         Margin="0 0 0 20">
+            <ui:CardExpander.Header>
+                <ui:TextBlock
+                            Grid.Column="0"
+                            FontFamily="Inter"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Text="Счёт" />
+            </ui:CardExpander.Header>
+            <StackPanel Background="White"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                        Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <ui:AutoSuggestBox x:Name="PayerBox"
+                                       FontFamily="Inter"
+                                       FontSize="14"
+                                       Width="300"
+                                       PlaceholderText="Заказчик"
+                                       Margin="20 10 20 20"/>
+                    <ui:NumberBox x:Name="BillBox"
+                                       FontFamily="Inter"
+                                       FontSize="14"
+                                       Width="300"
+                                       PlaceholderText="Номер счёта"
+                                       Margin="0 10 20 20"
+                                        SpinButtonPlacementMode="Hidden"/>
+                </StackPanel>
+                <ui:Button x:Name="GenBillButton"
+                     HorizontalAlignment="Left"
+                     Margin="20 10 10 20"
+                     Background="{StaticResource PrimaryColor}"
+                     Foreground="White"
+                     CornerRadius="5"
+                     FontFamily="Inter"
+                     FontSize="14"
+                     Content="Сформировать"/>       
+            </StackPanel>
+        </ui:CardExpander>
+
+        <ui:CardExpander Background="White"
+                         ContentPadding="0"
+                         Margin="0 0 0 20">
+            <ui:CardExpander.Header>
+                <ui:TextBlock
+                            Grid.Column="0"
+                            FontFamily="Inter"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Text="ТЭН" />
+            </ui:CardExpander.Header>
+            <StackPanel Background="White"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                        Orientation="Vertical">
+                <ui:DataGrid x:Name="DocsToTFNList"/>
+                <Label>DatagridBinding</Label>
+                <ui:Button x:Name="GenTFNButton"
+                     HorizontalAlignment="Left"
+                     Margin="20 10 10 20"
+                     Background="{StaticResource PrimaryColor}"
+                     Foreground="White"
+                     CornerRadius="5"
+                     FontFamily="Inter"
+                     FontSize="14"
+                     Content="Сформировать"/>
+            </StackPanel>
+        </ui:CardExpander>
+    </StackPanel>
+</Page>

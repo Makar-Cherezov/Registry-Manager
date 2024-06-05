@@ -1,145 +1,109 @@
-﻿<Page x:Class="RegistryManagerClient.View.Pages.CalculationsPage"
+﻿<Page x:Class="RegistryManagerClient.View.Pages.CalculatorPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RegistryManagerClient.View.Pages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:cosm="clr-namespace:RegistryManagerClient.Cosmetics"
       mc:Ignorable="d" 
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      d:DesignHeight="980" d:DesignWidth="1400"
-      Title="CalculationsPage">
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CalculatorPage">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="3.5*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0"
+    <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Background="White">
-            <TabControl Margin="0,8,0,0"
-                    Grid.Column="0"
-                    TabStripPlacement="Top"
-                    HorizontalAlignment="Stretch"
-                    VerticalContentAlignment="Top">
-                <TabItem IsSelected="True">
-                    <TabItem.Header>
-                        <TextBlock Text="Список" Visibility="Visible"/>
-                    </TabItem.Header>
-                    <ListBox x:Name="CargoListBox">
-                        <!--Сделать вывод шаблонных элементов в листбокс-->
-                    </ListBox>
-                </TabItem>
-                <TabItem IsSelected="False">
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Margin="0,0,6,0"/>
-                            <TextBlock Text="Примечания" />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <Grid>
-                        <TextBlock Margin="12" Text="Stacpanel из текстовых элементов" />
-                    </Grid>
-                </TabItem>
-            </TabControl>
-        </StackPanel>
-        <StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Grid.Column="1"
                     Margin="20 20 20 20"
                     CanVerticallyScroll="True">
-            <ui:CardExpander Background="White"
+        <ui:CardExpander Background="White"
                              ContentPadding="0">
-                <ui:CardExpander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <ui:TextBlock
+            <ui:CardExpander.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ui:TextBlock
                                 Grid.Column="0"
                                 FontFamily="Inter"
                                 FontSize="20"
                                 FontWeight="Bold"
                                 Text="Реестр" />
-                        <ui:TextBlock
+                    <ui:TextBlock
                                 Grid.Column="1"
                                 FontFamily="Inter"
                                 FontSize="20"
                                 FontWeight="Bold"
                                 Text="биндинг на цену" />
-                    </Grid>
-                </ui:CardExpander.Header>
-                <StackPanel Background="White"
+                </Grid>
+            </ui:CardExpander.Header>
+            <StackPanel Background="White"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                        <cosm:LabelledText Grid.Row="0"
+                    <cosm:LabelledText Grid.Row="0"
                                        Grid.Column="0"
                                        x:Name="RouteLabel"
                                        LabelText="Маршрут"
                                        ContentText="Binding"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
-                        <cosm:LabelledText Grid.Row="0"
+                    <cosm:LabelledText Grid.Row="0"
                                 Grid.Column="1"
                                 x:Name="TransportLabel"
                                 LabelText="Номер ТС"
                                 ContentText="Binding"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
-                        <cosm:LabelledText Grid.Row="0"
+                    <cosm:LabelledText Grid.Row="0"
                                        Grid.Column="2"
                                        x:Name="DateSentLabel"
                                        LabelText="Дата отправки"
                                        ContentText="Binding"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
-                        <cosm:LabelledText Grid.Row="0"
+                    <cosm:LabelledText Grid.Row="0"
                                        Grid.Column="3"
                                        x:Name="DatereceivedLabel"
                                        LabelText="Дата доставки"
                                        ContentText="Binding"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
-                        <cosm:LabelledText Grid.Row="1"
+                    <cosm:LabelledText Grid.Row="1"
                                        Grid.Column="1"
                                        x:Name="StatusLabel"
                                        LabelText="Статус"
                                        ContentText="Binding"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
-                        <StackPanel Grid.Row="1"
+                    <StackPanel Grid.Row="1"
                                     Grid.Column="0"
                                     Orientation="Vertical"
                                     HorizontalAlignment="Center">
-                            <Label FontFamily="Inter" 
+                        <Label FontFamily="Inter" 
                                    FontSize="14"
                                    Foreground="{StaticResource SecondaryColor}">
-                                Тип реестра</Label>
-                            <RadioButton
+                            Тип реестра</Label>
+                        <RadioButton
                                 Content="Сборный"
                                 GroupName="radio_group_one"
                                 IsChecked="True" />
-                            <RadioButton
+                        <RadioButton
                                 Content="Целиковый"
                                 GroupName="radio_group_one" />
-                        </StackPanel>
-                        <ui:Button Grid.Column="3"
+                    </StackPanel>
+                    <ui:Button Grid.Column="3"
                                    Grid.Row="1"
                                    Background="{StaticResource PrimaryColor}"
                                    x:Name="SendButton"
@@ -148,87 +112,87 @@
                                    FontFamily="Inter"
                                    FontSize="16"
                                    HorizontalAlignment="Center"/>
-                    </Grid>
-                </StackPanel>
-            </ui:CardExpander>
+                </Grid>
+            </StackPanel>
+        </ui:CardExpander>
 
-            <ui:CardExpander Background="White"
+        <ui:CardExpander Background="White"
                              ContentPadding="0"
                              Margin="0 20 0 0">
-                <ui:CardExpander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <ui:TextBlock
+            <ui:CardExpander.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ui:TextBlock
                                 Grid.Column="0"
                                 FontFamily="Inter"
                                 FontSize="20"
                                 FontWeight="Bold"
                                 Text="Клиент" />
-                        <ui:TextBlock
+                    <ui:TextBlock
                                 Grid.Column="1"
                                 FontFamily="Inter"
                                 FontSize="20"
                                 FontWeight="Bold"
                                 Text="биндинг на цену" />
-                    </Grid>
-                </ui:CardExpander.Header>
-                <StackPanel Background="White"
+                </Grid>
+            </ui:CardExpander.Header>
+            <StackPanel Background="White"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Row="0"
+                    <StackPanel Grid.Row="0"
                                     HorizontalAlignment="Stretch">
-                            <TextBlock FontFamily="Inter"
+                        <TextBlock FontFamily="Inter"
                                        FontWeight="Bold"
                                        FontSize="16"
                                        Text="Информация"/>
-                            <cosm:LabelledInfoLine
+                        <cosm:LabelledInfoLine
                                 x:Name="ClientNameLabel"
                                 LabelText="Наименование клиента"
                                 ContentText="Биндинг"
                                 InfoText="биндинг"/>
-                            <cosm:LabelledInfoLine
+                        <cosm:LabelledInfoLine
                                 x:Name="ContactLabel"
                                 LabelText="Контактное лицо"
                                 ContentText="Биндинг"
                                 InfoText="биндинг"/>
-                            <cosm:LabelledInfoLine
+                        <cosm:LabelledInfoLine
                                 x:Name="ManagerLabel"
                                 LabelText="Ответственный менеджер"
                                 ContentText="Биндинг"
                                 InfoText="биндинг"/>
-                        </StackPanel>
+                    </StackPanel>
 
-                        <StackPanel Grid.Column="1"
+                    <StackPanel Grid.Column="1"
                             HorizontalAlignment="Stretch">
-                            <TextBlock FontFamily="Inter"
+                        <TextBlock FontFamily="Inter"
                                FontWeight="Bold"
                                FontSize="16"
                                Text="Тарифы"/>
-                            <ui:NumberBox
+                        <ui:NumberBox
                                 Maximum="10000"
                                 Minimum="0"
                                 PlaceholderText="Тариф по весу"
                                 SpinButtonPlacementMode="Hidden"
                                 Width="150"
                                 HorizontalAlignment="Left"/>
-                            <ui:NumberBox
+                        <ui:NumberBox
                                 Maximum="10000"
                                 Minimum="0"
                                 PlaceholderText="Тариф по объему"
                                 SpinButtonPlacementMode="Hidden"
                                 Width="150"
                                 HorizontalAlignment="Left"/>
-                            <ComboBox 
+                        <ComboBox 
                                 Padding="5 0 0 0"
                                 x:Name="SchemaComboBox"
                                 Width="200"
@@ -241,90 +205,89 @@
                                 Background="White"
                                 BorderBrush="{StaticResource PrimaryColor}"
                                 BorderThickness="1">
-                                <ComboBox.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
-                                    </Style>
-                                </ComboBox.Resources>
-                            </ComboBox>
-                        </StackPanel>
+                            <ComboBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                </Style>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                    </StackPanel>
 
-                        <StackPanel Grid.Column="2"
+                    <StackPanel Grid.Column="2"
                              HorizontalAlignment="Stretch">
-                            <TextBlock FontFamily="Inter"
+                        <TextBlock FontFamily="Inter"
                                 FontWeight="Bold"
                                 FontSize="16"
                                 Text="Особые соглашения"/>
-                            <CheckBox Content="Не считать минимальную стоимость"
+                        <CheckBox Content="Не считать минимальную стоимость"
                                       FontFamily="Inter"
                                       x:Name="MinCostCheckBox"/>
-                            <CheckBox Content="Не считать въезд"
+                        <CheckBox Content="Не считать въезд"
                                       FontFamily="Inter"
                                       x:Name="EntriesCheckBox"/>
-                            <CheckBox Content="Не считать доупаковку"
+                        <CheckBox Content="Не считать доупаковку"
                                       FontFamily="Inter"
                                       x:Name="AddPackCheckBox"/>
-                            <CheckBox Content="Не считать негабарит"
+                        <CheckBox Content="Не считать негабарит"
                                       FontFamily="Inter"
                                       x:Name="OversizeCheckBox"/>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </ui:CardExpander>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ui:CardExpander>
 
-            <ui:CardExpander Background="White"
+        <ui:CardExpander Background="White"
                             ContentPadding="0"
                             Margin="0 20 0 0">
-                <ui:CardExpander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <ui:TextBlock
+            <ui:CardExpander.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ui:TextBlock
                                Grid.Column="0"
                                FontFamily="Inter"
                                FontSize="20"
                                FontWeight="Bold"
                                Text="Груз" />
-                        <ui:TextBlock
+                    <ui:TextBlock
                                Grid.Column="1"
                                FontFamily="Inter"
                                FontSize="20"
                                FontWeight="Bold"
                                Text="биндинг на цену" />
-                    </Grid>
-                </ui:CardExpander.Header>
-                <StackPanel Background="White"
+                </Grid>
+            </ui:CardExpander.Header>
+            <StackPanel Background="White"
                             Orientation="Vertical">
-                    <StackPanel Orientation="Vertical"
+                <StackPanel Orientation="Vertical"
                                 Margin="20">
 
-                        <Label FontFamily="Inter" 
+                    <Label FontFamily="Inter" 
                            FontSize="14"
                            Foreground="{StaticResource SecondaryColor}"
                             Content="Зазды на терминал"/>
-                        <ui:NumberBox x:Name="EntriesCountBox"
+                    <ui:NumberBox x:Name="EntriesCountBox"
                                       Minimum="0"
                                       SmallChange="1"
                                       Value="0"
                                       SpinButtonPlacementMode="Compact"
                                       HorizontalAlignment="Left"/>
-                    </StackPanel>
-                    <StackPanel x:Name="CargoPlacesPanel">
-                        
-                    </StackPanel>
-                    <ui:Button 
+                </StackPanel>
+                <StackPanel x:Name="CargoPlacesPanel">
+
+                </StackPanel>
+                <ui:Button x:Name="AddCargoButton"
                         HorizontalAlignment="Left"
-                        Margin="0 10 10 0"
+                        Margin="20 10 10 20"
                          Background="{StaticResource PrimaryColor}"
                          Foreground="White"
                          CornerRadius="5"
                          FontSize="16"
-                         Icon="{ui:SymbolIcon AddCircle24}"/>          
-                </StackPanel>
-            </ui:CardExpander>
+                         Icon="{ui:SymbolIcon AddCircle24}"/>
+            </StackPanel>
+        </ui:CardExpander>
 
-        </StackPanel>
-    </Grid>
+    </StackPanel>
 </Page>

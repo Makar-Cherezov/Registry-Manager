@@ -15,14 +15,13 @@ using System.Windows.Shapes;
 
 namespace RegistryManagerClient.View.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для CalculationsPage.xaml
-    /// </summary>
-    public partial class CalculationsPage : Page
+
+    public partial class CalcAndDocParentPage : Page
     {
-        public CalculationsPage()
+        public CalcAndDocParentPage()
         {
             InitializeComponent();
+            WorkAreaFrame.Navigate(new CalculatorPage());
         }
     }
 }
