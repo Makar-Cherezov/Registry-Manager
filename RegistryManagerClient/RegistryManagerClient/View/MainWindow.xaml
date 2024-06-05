@@ -28,20 +28,18 @@
                 Grid.Column="0"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Left">
+                <ui:NavigationView PaneDisplayMode="Top" 
+                                   FontFamily="Inter"
+                                   IsBackButtonVisible="Collapsed">
+                    <ui:NavigationView.MenuItems >
+                        <ui:NavigationViewItem Icon="{ui:SymbolIcon Home24}" />
+                        <ui:NavigationViewItem Icon="{ui:SymbolIcon Save24}" />
+                        <ui:NavigationViewItem Content="Расчёты" />
+                        <ui:NavigationViewItem Content="Документы" />
+                    </ui:NavigationView.MenuItems>
+                </ui:NavigationView>
 
-                <ui:Button Margin="0 0 30 0" Width="50" Height="50">
-                    <ui:SymbolIcon 
-                        Symbol="Home12" 
-                        FontSize="25"
-                        HorizontalAlignment="Center"/>
-                </ui:Button>
-
-                <ui:Button Width="50" Height="50">
-                    <ui:SymbolIcon 
-                        Symbol="Save16"
-                        FontSize="25"
-                        HorizontalAlignment="Center"/>
-                </ui:Button>
+                
                 
             </StackPanel>
             <TextBlock 
