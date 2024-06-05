@@ -63,40 +63,7 @@
                         Padding="10"/>
                 </StackPanel>
             </Button>
-            <Button
-                x:Name="OpenRegistryButton"
-                Grid.Row="1"
-                Background="White"
-                BorderBrush="{StaticResource PrimaryColor}"
-                BorderThickness="3"
-                Margin="40 0 40 0"
-                Width="150"
-                Height="150">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <StackPanel
-                    Orientation="Vertical"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center">
-                    <ui:SymbolIcon 
-                        Symbol="DocumentTable24"
-                        Foreground="{StaticResource PrimaryColor}"
-                        FontSize="70"/>
-                    <TextBlock
-                        FontFamily="Inter"
-                        FontSize="16"
-                        FontWeight="Bold"
-                        Text="Открыть реестр"
-                        VerticalAlignment="Center"
-                        TextAlignment="Center"
-                        HorizontalAlignment="Center"
-                        TextWrapping="Wrap"
-                        Padding="10"/>
-                </StackPanel>
-            </Button>
+            
             <Button
                 x:Name="CreateRegistryButton"
                 Grid.Row="1"

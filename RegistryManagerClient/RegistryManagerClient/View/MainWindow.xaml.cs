@@ -1,4 +1,5 @@
-﻿using RegistryManagerClient.View.Pages;
+﻿using RegistryManagerClient.Services;
+using RegistryManagerClient.View.Pages;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,10 +19,31 @@ namespace RegistryManagerClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ViewModels.MainWindowViewModel ViewModel { get; }
         public MainWindow()
         {
+            ViewModel = new ViewModels.MainWindowViewModel();
+            DataContext = this;
             InitializeComponent();
-            MainFrame.Navigate(new HomePage());
+            MainFrame.Navigate(PageService.Instance.GetPage<HomePage>());
+        }
+
+        private void CalculationsNav_Click(object sender, RoutedEventArgs e)
+        {
+            CalcAndDocParentPage page = PageService.Instance.GetPage<CalcAndDocParentPage>();
+            page.WorkAreaFrame.Navigate(PageService.Instance.GetPage<CalculatorPage>());
+        }
+
+        private void DocumentsNav_Click(object sender, RoutedEventArgs e)
+        {
+            CalcAndDocParentPage page = PageService.Instance.GetPage<CalcAndDocParentPage>();
+            page.WorkAreaFrame.Navigate(PageService.Instance.GetPage<DocumentsGenPage>());
+        }
+
+        private void HomeNav_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(PageService.Instance.GetPage<HomePage>());
+            ViewModel.CalcDocVisibility = Visibility.Hidden;
         }
     }
 }

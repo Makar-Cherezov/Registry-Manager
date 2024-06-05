@@ -45,7 +45,7 @@
                 </TabItem>
             </TabControl>
         </StackPanel>
-        <Frame x:Name="WorkAreaFrame">
+        <Frame x:Name="WorkAreaFrame" Grid.Column="1">
 
         </Frame>
     </Grid>

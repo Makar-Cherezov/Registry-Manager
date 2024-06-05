@@ -16,7 +16,8 @@
                     Margin="20 20 20 20"
                     CanVerticallyScroll="True">
         <ui:CardExpander Background="White"
-                             ContentPadding="0">
+                             ContentPadding="0"
+                         BorderBrush="White">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -58,28 +59,32 @@
                                        LabelText="Маршрут"
                                        ContentText="Binding"
                                        HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                                       VerticalAlignment="Center"
+                                       Margin="0 10 0 0"/>
                     <cosm:LabelledText Grid.Row="0"
                                 Grid.Column="1"
                                 x:Name="TransportLabel"
                                 LabelText="Номер ТС"
                                 ContentText="Binding"
                                 HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
+                                VerticalAlignment="Center"
+                                       Margin="0 10 0 0"/>
                     <cosm:LabelledText Grid.Row="0"
                                        Grid.Column="2"
                                        x:Name="DateSentLabel"
                                        LabelText="Дата отправки"
                                        ContentText="Binding"
                                        HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                                       VerticalAlignment="Center"
+                                       Margin="0 10 0 0"/>
                     <cosm:LabelledText Grid.Row="0"
                                        Grid.Column="3"
                                        x:Name="DatereceivedLabel"
                                        LabelText="Дата доставки"
                                        ContentText="Binding"
                                        HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                                       VerticalAlignment="Center"
+                                       Margin="0 10 0 0"/>
                     <cosm:LabelledText Grid.Row="1"
                                        Grid.Column="1"
                                        x:Name="StatusLabel"
@@ -103,15 +108,13 @@
                                 Content="Целиковый"
                                 GroupName="radio_group_one" />
                     </StackPanel>
-                    <ui:Button Grid.Column="3"
-                                   Grid.Row="1"
+                    <ui:Button Grid.ColumnSpan="2"
                                    Background="{StaticResource PrimaryColor}"
                                    x:Name="SendButton"
                                    Content="Отправить на согласование"
                                    Foreground="White"
                                    FontFamily="Inter"
-                                   FontSize="16"
-                                   HorizontalAlignment="Center"/>
+                                   FontSize="16" Grid.Column="2" Margin="80,0,0,0" Grid.Row="1"/>
                 </Grid>
             </StackPanel>
         </ui:CardExpander>
@@ -149,7 +152,8 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Row="0"
+                    <StackPanel Grid.Column="0"
+                                Margin="0 10 0 0"
                                     HorizontalAlignment="Stretch">
                         <TextBlock FontFamily="Inter"
                                        FontWeight="Bold"
@@ -173,6 +177,7 @@
                     </StackPanel>
 
                     <StackPanel Grid.Column="1"
+                                Margin="0 10 0 0"
                             HorizontalAlignment="Stretch">
                         <TextBlock FontFamily="Inter"
                                FontWeight="Bold"
@@ -214,6 +219,7 @@
                     </StackPanel>
 
                     <StackPanel Grid.Column="2"
+                                Margin="0 10 0 0"
                              HorizontalAlignment="Stretch">
                         <TextBlock FontFamily="Inter"
                                 FontWeight="Bold"
@@ -267,7 +273,7 @@
                     <Label FontFamily="Inter" 
                            FontSize="14"
                            Foreground="{StaticResource SecondaryColor}"
-                            Content="Зазды на терминал"/>
+                            Content="Заезды на терминал"/>
                     <ui:NumberBox x:Name="EntriesCountBox"
                                       Minimum="0"
                                       SmallChange="1"

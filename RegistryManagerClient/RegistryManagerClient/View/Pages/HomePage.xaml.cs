@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RegistryManagerClient.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,11 +21,22 @@ namespace RegistryManagerClient.View.Pages
     /// </summary>
     public partial class HomePage : Page
     {
+        public ViewModels.HomePageViewModel ViewModel { get; }
         public HomePage()
         {
+            ViewModel = new ViewModels.HomePageViewModel();
+            DataContext = this;
             InitializeComponent();
         }
 
-        
+        //private void OpenRegistryButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var mainWindow = Application.Current.MainWindow as MainWindow;
+        //    if (mainWindow != null)
+        //    {
+        //        mainWindow.MainFrame.Navigate(PageService.Instance.GetPage<CalcAndDocParentPage>());
+        //        mainWindow.ViewModel.CalcDocVisibility = Visibility.Visible;
+        //    }
+        //}
     }
 }
