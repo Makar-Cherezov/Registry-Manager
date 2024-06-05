@@ -15,35 +15,39 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3.5*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Background="White">
-            <TabControl Margin="0,8,0,0"
-                    Grid.Column="0"
-                    TabStripPlacement="Top"
-                    HorizontalAlignment="Stretch"
-                    VerticalContentAlignment="Top">
-                <TabItem IsSelected="True">
-                    <TabItem.Header>
-                        <TextBlock Text="Список" Visibility="Visible"/>
-                    </TabItem.Header>
-                    <ListBox x:Name="CargoListBox">
-                        <!--Сделать вывод шаблонных элементов в листбокс-->
-                    </ListBox>
-                </TabItem>
-                <TabItem IsSelected="False">
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Margin="0,0,6,0"/>
-                            <TextBlock Text="Примечания" />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <Grid>
-                        <TextBlock Margin="12" Text="Stacpanel из текстовых элементов" />
-                    </Grid>
-                </TabItem>
-            </TabControl>
+            <StackPanel Grid.Column="0"
+                    Background="White"
+                    Orientation="Horizontal">
+                <TabControl Margin="0,8,0,0" 
+                            Width="300"
+                            HorizontalAlignment="Center">
+                     <TabItem IsSelected="True" Width="100">
+                         <TabItem.Header>
+                             <StackPanel>
+                             <TextBlock Text="Список" 
+                                        Visibility="Visible"
+                                        HorizontalAlignment="Stretch"/>
+                             </StackPanel>
+                         </TabItem.Header>
+                         <ListBox x:Name="CargoListBox">
+             
+                            Сделать вывод шаблонных элементов в листбокс
+            
+                         </ListBox>
+                     </TabItem>
+                     <TabItem IsSelected="False" Width="100">
+                         <TabItem.Header>
+                             <StackPanel Orientation="Horizontal">
+                                 <ui:SymbolIcon Margin="0,0,6,0"/>
+                                 <TextBlock Text="Примечания" />
+                             </StackPanel>
+                         </TabItem.Header>
+                         <Grid>
+                             <TextBlock Margin="12" Text="Stacpanel из текстовых элементов" />
+                         </Grid>
+                     </TabItem>
+     
+                 </TabControl>
         </StackPanel>
         <Frame x:Name="WorkAreaFrame" Grid.Column="1">
 

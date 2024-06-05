@@ -29,14 +29,14 @@ namespace RegistryManagerClient.View.Pages
             InitializeComponent();
         }
 
-        //private void OpenRegistryButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var mainWindow = Application.Current.MainWindow as MainWindow;
-        //    if (mainWindow != null)
-        //    {
-        //        mainWindow.MainFrame.Navigate(PageService.Instance.GetPage<CalcAndDocParentPage>());
-        //        mainWindow.ViewModel.CalcDocVisibility = Visibility.Visible;
-        //    }
-        //}
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            if (mainWindow != null)
+            {
+                mainWindow.MainFrame.Navigate(new CalcAndDocParentPage(ViewModel.SelectedRegistry!.RegistryId));
+                mainWindow.ViewModel.CalcDocVisibility = Visibility.Visible;
+            }
+        }
     }
 }

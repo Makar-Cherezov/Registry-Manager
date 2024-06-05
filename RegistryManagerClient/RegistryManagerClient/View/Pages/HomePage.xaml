@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RegistryManagerClient.View.Pages"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-
+      xmlns:models="clr-namespace:RegistryManagerClient.Models.ViewModelObjects"
       mc:Ignorable="d" 
       d:DesignHeight="980" d:DesignWidth="1400"
       Title="HomePage">
@@ -232,15 +232,17 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         Padding="5 0 0 0"
+                        Margin="0 0 20 0"
                         x:Name="StatusComboBox"
-                        Width="200"
                         Text="Все статусы"
                         FontFamily="Inter" 
                         IsEditable="True" 
                         FontSize="16"
                         Background="White"
                         BorderBrush="{StaticResource PrimaryColor}"
-                        BorderThickness="1">
+                        BorderThickness="1"
+                        HorizontalAlignment="Stretch">
+                       
                         <ComboBox.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"/>
@@ -249,10 +251,11 @@
                     </ComboBox>
 
                     <DatePicker 
+                        HorizontalAlignment="Stretch"
+                        Margin="0 0 20 0"
                         x:Name="LastChangeDatePicker"
                         Grid.Row="0"
                         Grid.Column="2"
-                        Width="200" 
                         Padding="0"
                         FirstDayOfWeek="Monday" 
                         DisplayDateStart="01/01/2024"
@@ -274,31 +277,71 @@
                         Grid.Row="0"
                         Grid.Column="3"
                         x:Name="EditorComboBox"
-                        Width="200"
+                        HorizontalAlignment="Stretch"
                         Padding="5 0 0 0"
+                        Margin="0 0 20 0"
                         Text="Все авторы"
                         FontFamily="Inter" 
                         IsEditable="True" 
                         FontSize="16"
                         Background="White"
                         BorderBrush="{StaticResource PrimaryColor}"
-                        BorderThickness="2">
+                        BorderThickness="1">
                         <ComboBox.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"/>
                             </Style>
                         </ComboBox.Resources>
                     </ComboBox>
+                    
+                    <ui:ListView
+                    Grid.Column="0"
+                    Grid.ColumnSpan="4"
+                    Grid.Row="1"
+                    ItemsSource="{Binding ViewModel.Registries, Mode=TwoWay}"
+                    SelectedIndex="-1"
+                    SelectedItem="{Binding ViewModel.SelectedRegistry}"
+                    SelectionMode="Single"
+                    SelectionChanged="ListView_SelectionChanged">
+                        <ui:ListView.ItemTemplate>
+                            <DataTemplate DataType="{x:Type models:RegistryViewModel}">
+                                <Grid Margin="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Margin="0,6,0,0"
+                                        FontFamily="Inter"
+                                        FontSize="14"
+                                        Text="{Binding RegistryCode, Mode=OneWay}" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Margin="0,6,0,0"
+                                        FontFamily="Inter"
+                                        FontSize="14"
+                                        Text="{Binding Status, Mode=OneWay}" />
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        Margin="0,6,0,0"
+                                        FontFamily="Inter"
+                                        FontSize="14"
+                                        Text="{Binding ArrivalDate, Mode=OneWay}" />
+                                    <TextBlock
+                                        Grid.Column="3"
+                                        Margin="0,6,0,0"
+                                        FontFamily="Inter"
+                                        FontSize="14"
+                                        Text="{Binding Author, Mode=OneWay}" />
 
-                    <ui:DataGrid
-                        Grid.Row="1"
-                        Grid.ColumnSpan="4"
-                        HeadersVisibility="None"
-                        x:Name="RecentRegistriesDataGrid"
-                        AutoGenerateColumns="True"
-                        Background="Transparent"
-                        FontFamily="Inter"
-                        FontSize="16"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ui:ListView.ItemTemplate>
+                    </ui:ListView>
+
                 </Grid>
             </StackPanel>
             

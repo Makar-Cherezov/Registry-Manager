@@ -18,8 +18,10 @@ namespace RegistryManagerClient.View.Pages
 
     public partial class CalcAndDocParentPage : Page
     {
-        public CalcAndDocParentPage()
+        public ViewModels.CalcAndDocParentViewModel ViewModel { get; }
+        public CalcAndDocParentPage(long regID)
         {
+            ViewModel = new ViewModels.CalcAndDocParentViewModel(regID);
             InitializeComponent();
             WorkAreaFrame.Navigate(new CalculatorPage());
         }
