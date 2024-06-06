@@ -24,8 +24,9 @@ namespace RegistryManagerClient.View.Pages
         {
             long regID = PageService.Instance.GetPage<HomePage>().ViewModel.SelectedRegistry!.RegistryId;
             ViewModel = new ViewModels.CalcAndDocParentViewModel(regID);
+            DataContext = this;
             InitializeComponent();
-            WorkAreaFrame.Navigate(new CalculatorPage());
+            WorkAreaFrame.Navigate(PageService.Instance.GetPage<CalculatorPage>());
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

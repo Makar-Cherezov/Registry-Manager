@@ -1,6 +1,10 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using RegistryManagerClient.Models.ViewModelObjects;
+using RegistryManagerClient.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,8 +24,14 @@ namespace RegistryManagerClient.View.Pages
     /// </summary>
     public partial class CalculatorPage : Page
     {
+        
+
+
+        public CalculatorViewModel ViewModel { get; }
         public CalculatorPage()
         {
+            ViewModel = new CalculatorViewModel();
+            DataContext = this;
             InitializeComponent();
         }
     }

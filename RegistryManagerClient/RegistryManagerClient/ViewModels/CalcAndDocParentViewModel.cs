@@ -16,9 +16,13 @@ namespace RegistryManagerClient.ViewModels
         [ObservableProperty]
         private FullRegistryVM _registry;
         [ObservableProperty]
-        private int _selectedCargo;
-
-        
+        private int _selectedCargoIndex;
+        [ObservableProperty]
+        private List<CargoVM> _cargos;
+        [ObservableProperty]
+        private string _clientNotes;
+        [ObservableProperty]
+        private string _cargoNotes;
         public CalcAndDocParentViewModel(long regID)
         {
             if (!_isInitialized)
@@ -29,8 +33,36 @@ namespace RegistryManagerClient.ViewModels
         private void InitializeViewModel(long regID)
         {
             _isInitialized = true;
-            SelectedCargo = 0;
-            Registry = FullRegistryVM.FindByKey(regID);
+            SelectedCargoIndex = 0;
+            StatesService.Instance.SetState<FullRegistryVM>(FullRegistryVM.FindByKey(regID));
+            Registry = StatesService.Instance.GetState<FullRegistryVM>();
+            Cargos = Registry.Cargos;
+            UpdateNotes();
+            UpdateCargo();
+        }
+
+        private void UpdateCargo()
+        {
+            StatesService.Instance.SetState<CargoVM>(Registry.Cargos[SelectedCargoIndex]);
+        }
+
+        partial void OnSelectedCargoIndexChanged(int value)
+        {
+            UpdateNotes();
+            UpdateCargo();
+        }
+        private void UpdateNotes()
+        {
+            if (SelectedCargoIndex >= 0 && SelectedCargoIndex < Cargos.Count)
+            {
+                CargoNotes = Cargos[SelectedCargoIndex].Notes;
+                ClientNotes = Cargos[SelectedCargoIndex].SenderClientVM.Notes;
+            }
+            else
+            {
+                CargoNotes = string.Empty;
+                ClientNotes = string.Empty;
+            }
         }
 
     }

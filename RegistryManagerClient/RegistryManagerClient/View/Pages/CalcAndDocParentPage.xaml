@@ -7,7 +7,7 @@
       xmlns:cosm="clr-namespace:RegistryManagerClient.Cosmetics"
       mc:Ignorable="d" 
       xmlns:models="clr-namespace:RegistryManagerClient.Models.ViewModelObjects"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
       d:DesignHeight="980" d:DesignWidth="1400"
       Title="CalcAndDocParentPage">
 
@@ -19,7 +19,7 @@
             <StackPanel Grid.Column="0"
                     Background="White"
                     Orientation="Horizontal">
-                <TabControl Margin="0,8,0,0" 
+            <TabControl Margin="0,8,0,0" 
                             Width="300"
                             HorizontalAlignment="Center">
                 <TabItem IsSelected="True" Width="100">
@@ -31,35 +31,47 @@
                         </StackPanel>
                     </TabItem.Header>
                     <ui:ListView
-                        ItemsSource="{Binding ViewModel.Registry.Cargos, Mode=TwoWay}"
-                        SelectedIndex="{Binding ViewModel.SelectedCargo, Mode=TwoWay}"
-                        SelectionMode="Single" SelectionChanged="ListView_SelectionChanged">
+                        ItemsSource="{Binding ViewModel.Cargos, Mode=TwoWay}"
+                        SelectedIndex="{Binding ViewModel.SelectedCargoIndex, Mode=TwoWay}"
+                        SelectionMode="Single" 
+                        SelectionChanged="ListView_SelectionChanged">
                         <ui:ListView.ItemTemplate>
                             <DataTemplate DataType="{x:Type models:CargoVM}">
-                                
-                                    <TextBlock
+                                <TextBlock
                                     Margin="0"
                                     FontFamily="Inter"
                                     FontSize="14"
+                                    Foreground="Black"
                                     Text="{Binding SenderClientVM.ClientName, Mode=OneWay}" />
-                                    
                             </DataTemplate>
                         </ui:ListView.ItemTemplate>
                     </ui:ListView>
                 </TabItem>
                 <TabItem IsSelected="False" Width="100">
-                         <TabItem.Header>
-                             <StackPanel Orientation="Horizontal">
-                                 <ui:SymbolIcon Margin="0,0,6,0"/>
-                                 <TextBlock Text="Примечания" />
-                             </StackPanel>
-                         </TabItem.Header>
-                         <Grid>
-                             <TextBlock Margin="12" Text="Stacpanel из текстовых элементов" />
-                         </Grid>
-                     </TabItem>
-     
-                 </TabControl>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Margin="0,0,6,0"/>
+                            <TextBlock Text="Примечания" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock
+                            Margin="0"
+                            FontFamily="Inter"
+                            FontSize="14"
+                            Foreground="Black"
+                            Text="{Binding ViewModel.ClientNotes, Mode=OneWay}" />
+
+                        <TextBlock
+                        Margin="0"
+                        FontFamily="Inter"
+                        FontSize="14"
+                        Foreground="Black"
+                        Text="{Binding ViewModel.CargoNotes, Mode=OneWay}" />
+                    </StackPanel>
+                </TabItem>
+
+            </TabControl>
         </StackPanel>
         <Frame x:Name="WorkAreaFrame" Grid.Column="1">
 
