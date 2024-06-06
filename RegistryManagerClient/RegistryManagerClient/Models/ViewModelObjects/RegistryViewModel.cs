@@ -30,11 +30,10 @@ namespace RegistryManagerClient.Models.ViewModelObjects
             RegistryCode = registry.RegistryCode;
             
             ArrivalDate = registry.ArrivalDate;
-            
-            var tryFindStatus = ViewModelObjectsService.Instance.FindEntityByKey<RegistryStatus>(registry.StatusId);
-            tryFindStatus.Match( some: entity => Status = entity.Name, none: () => Status="");
-            var tryFindAuthor= ViewModelObjectsService.Instance.FindEntityByKey<User>(registry.Author);
-            tryFindAuthor.Match(some: entity => Author = $"{entity.Name} {entity.Surname}", none: () => Author = "");
+            StatusId = registry.StatusId;
+            Status = registry.Status.Name;
+            AuthorId = registry.Author;
+            Author = $"{registry.AuthorNavigation.Name} {registry.AuthorNavigation.Name}";
 
         }
 

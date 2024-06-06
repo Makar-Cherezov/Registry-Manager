@@ -43,6 +43,8 @@ public partial class Cargo
 
     public virtual Client ReceiverClientNavigation { get; set; } = null!;
 
+    public virtual Registry Registry { get; set; } = null!;
+
     public virtual ForwardingSchema Schema { get; set; } = null!;
 
     public virtual Client SenderClientNavigation { get; set; } = null!;

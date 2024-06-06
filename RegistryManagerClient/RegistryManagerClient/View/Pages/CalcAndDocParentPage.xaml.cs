@@ -27,5 +27,10 @@ namespace RegistryManagerClient.View.Pages
             InitializeComponent();
             WorkAreaFrame.Navigate(new CalculatorPage());
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

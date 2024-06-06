@@ -29,5 +29,9 @@ public partial class Registry
 
     public virtual User AuthorNavigation { get; set; } = null!;
 
+    public virtual ICollection<Cargo> Cargos { get; set; } = new List<Cargo>();
+
     public virtual User LastEditorNavigation { get; set; } = null!;
+
+    public virtual RegistryStatus Status { get; set; } = null!;
 }

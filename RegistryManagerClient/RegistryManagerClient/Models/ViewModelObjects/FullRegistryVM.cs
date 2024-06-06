@@ -2,6 +2,7 @@
 using RegistryManagerClient.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace RegistryManagerClient.Models.ViewModelObjects
 
         public bool IsCombined { get; set; }
         public string Status { get; set; }
-        public List<Cargo>
+        public List<CargoVM> Cargos = new List<CargoVM>();
 
 
         // Default constructor
@@ -56,8 +57,8 @@ namespace RegistryManagerClient.Models.ViewModelObjects
             Author = registry.Author;
             LastEditor = registry.LastEditor;
             IsCombined = registry.IsCombined;
-            var tryFindStatus = ViewModelObjectsService.Instance.FindEntityByKey<RegistryStatus>(registry.StatusId);
-            tryFindStatus.Match(some: entity => Status = entity.Name, none: () => Status = "");
+            Status = registry.Status.Name;
+            Cargos = registry.Cargos.Select(c => new CargoVM(c)).ToList(); 
         }
 
         public override Registry ToEntity()
@@ -76,6 +77,11 @@ namespace RegistryManagerClient.Models.ViewModelObjects
                 TargetCity = TargetCity,
                 LastEditor = LastEditor,
             };
+        }
+
+        public static FullRegistryVM FindByKey(long key)
+        {
+            return ViewModelObjectsService.Instance.LoadViewModel<FullRegistryVM, Registry>(x => x.RegistryId == key, "Cargo");
         }
     }
 }

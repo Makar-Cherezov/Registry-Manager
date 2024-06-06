@@ -15,6 +15,8 @@ namespace RegistryManagerClient.ViewModels
         private bool _isInitialized = false;
         [ObservableProperty]
         private FullRegistryVM _registry;
+        [ObservableProperty]
+        private int _selectedCargo;
 
         
         public CalcAndDocParentViewModel(long regID)
@@ -27,10 +29,9 @@ namespace RegistryManagerClient.ViewModels
         private void InitializeViewModel(long regID)
         {
             _isInitialized = true;
-            ViewModelObjectsService.Instance
-                .FindEntityByKey<Registry>(regID)
-                .Match(some: entity => Registry = new FullRegistryVM(entity), 
-                none: () => Registry = new FullRegistryVM());
+            SelectedCargo = 0;
+            Registry = FullRegistryVM.FindByKey(regID);
         }
+
     }
 }

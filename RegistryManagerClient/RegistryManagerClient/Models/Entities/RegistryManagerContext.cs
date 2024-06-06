@@ -194,6 +194,11 @@ public partial class RegistryManagerContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Cargo_Receiver");
 
+            entity.HasOne(d => d.Registry).WithMany(p => p.Cargos)
+                .HasForeignKey(d => d.RegistryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Cargo_Registry");
+
             entity.HasOne(d => d.Schema).WithMany(p => p.Cargos)
                 .HasForeignKey(d => d.SchemaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -531,6 +536,11 @@ public partial class RegistryManagerContext : DbContext
                 .HasForeignKey(d => d.LastEditor)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Registry_Editor");
+
+            entity.HasOne(d => d.Status).WithMany(p => p.Registries)
+                .HasForeignKey(d => d.StatusId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Registry_Status");
         });
 
         modelBuilder.Entity<RegistryStatus>(entity =>

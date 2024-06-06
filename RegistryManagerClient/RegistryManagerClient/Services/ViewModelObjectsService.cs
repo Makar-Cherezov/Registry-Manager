@@ -4,6 +4,9 @@ using RegistryManagerClient.Models.ViewModelObjects;
 using Optional;
 using System.Linq.Expressions;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
+using System.Windows.Navigation;
+using System.Collections.Generic;
 
 
 namespace RegistryManagerClient.Services
@@ -22,48 +25,31 @@ namespace RegistryManagerClient.Services
 
         public static ViewModelObjectsService Instance => _instance.Value;
 
-        // TODO turn to Optional
-        public T LoadViewModel<T, TEntity>() where T : IViewModelObject<TEntity>, new() where TEntity : class
+        public T LoadViewModel<T, TEntity>(Expression<Func<TEntity, bool>> keyFilter, params string[]? includeProperties) where T : IViewModelObject<TEntity>, new() where TEntity : class
         {
-            var entity = _dbContext.Set<TEntity>().FirstOrDefault(); // Adjust as per your requirements
-            if (entity == null)
-            {
-                throw new Exception("No entity found in the database.");
-            }
-
-            var viewModel = new T();
-            viewModel.FromEntity(entity);
-            return viewModel;
+            List < Expression < Func<TEntity, bool> >> keylist = new List<Expression<Func<TEntity, bool>>>() { keyFilter};
+            return LoadViewModels<T, TEntity>(keylist, includeProperties).FirstOrDefault();
         }
 
-        public List<T> LoadViewModels<T, TEntity>() where T : IViewModelObject<TEntity>, new() where TEntity : class
-        {
-            var entities = _dbContext.Set<TEntity>().ToList();
-            var viewModels = new List<T>();
-            foreach (var entity in entities)
-            {
-                var viewModel = new T();
-                viewModel.FromEntity(entity);
-                viewModels.Add(viewModel);
-            }
-            return viewModels;
-        }
-
-        public Option<TEntity> FindEntityByKey<TEntity>(object keyValue) where TEntity : class
-        {
-            TEntity? entity = _dbContext.Set<TEntity>().Find(keyValue);
-            return entity == null ? Option.None<TEntity>() : Option.Some(entity);
-        }
-
-        public List<T> LoadFilteredViewModels<T, TEntity>(IEnumerable<Expression<Func<TEntity, bool>>> filters) where T : IViewModelObject<TEntity>, new() where TEntity : class
+        public List<T> LoadViewModels<T, TEntity>(IEnumerable<Expression<Func<TEntity, bool>>>? filters = null, params string[]? includeProperties) where T : IViewModelObject<TEntity>, new() where TEntity : class
         {
             IQueryable<TEntity> query = _dbContext.Set<TEntity>();
-
-            foreach (var filter in filters)
+            // Apply Filters
+            if (filters != null)
             {
-                query = query.Where(filter);
+                foreach (var filter in filters)
+                {
+                    query = query.Where(filter);
+                }
             }
-
+            // Apply Includes
+            if (includeProperties.Any())
+            {
+                foreach (var includeProperty in includeProperties)
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
             var entities = query.ToList();
             var viewModels = new List<T>();
             foreach (var entity in entities)
@@ -74,5 +60,6 @@ namespace RegistryManagerClient.Services
             }
             return viewModels;
         }
+
     }
 }

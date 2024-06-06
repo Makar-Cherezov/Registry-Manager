@@ -30,7 +30,7 @@ namespace RegistryManagerClient.ViewModels
         private void InitializeViewModel()
         {
             _isInitialized = true;
-            Registries = ViewModelObjectsService.Instance.LoadViewModels<RegistryViewModel, Registry>();
+            Registries = ViewModelObjectsService.Instance.LoadViewModels<RegistryViewModel, Registry>(null, "Status" , "AuthorNavigation");
         }
         
     }

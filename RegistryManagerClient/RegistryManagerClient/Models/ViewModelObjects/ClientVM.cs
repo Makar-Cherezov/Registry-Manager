@@ -64,7 +64,7 @@ namespace RegistryManagerClient.Models.ViewModelObjects
             else
             {
                 var client = c.PhysicalClients.First();
-                ClientName = "Физическое лицо";
+                ClientName = $"{client.Name} {client.Surname}"; 
                 ClientDoc = $"{client.PassportSeries}{client.PassportNumber}";
                 ClientContactName = $"{client.Name} {client.Surname}";
                 clientContactPhone = client.ClientPhones.FirstOrDefault().PhoneNumber;
