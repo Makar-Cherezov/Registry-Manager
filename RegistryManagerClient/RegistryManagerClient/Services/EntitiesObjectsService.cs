@@ -22,8 +22,12 @@ namespace RegistryManagerClient.Services
         }
 
         public static EntitiesObjectsService Instance => _instance.Value;
+        public T LoadEntity<T>(params string[]? includeProperties) where T : class
+        {
+            return LoadEntity<T>(null, includeProperties);
+        }
 
-        public T LoadEntity<T>(Expression<Func<T, bool>> keyFilter, params string[]? includeProperties) where T : class
+        public T LoadEntity<T>(Expression<Func<T, bool>>? keyFilter, params string[]? includeProperties) where T : class
         {
             List<Expression<Func<T, bool>>> keylist = new List<Expression<Func<T, bool>>>() { keyFilter };
             return LoadEntities<T>(keylist, includeProperties).FirstOrDefault();

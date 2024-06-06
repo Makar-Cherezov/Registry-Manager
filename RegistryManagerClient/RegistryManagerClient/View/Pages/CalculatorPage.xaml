@@ -8,6 +8,8 @@
       xmlns:cosm="clr-namespace:RegistryManagerClient.Cosmetics"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+            xmlns:models="clr-namespace:RegistryManagerClient.Models.ViewModelObjects"
+
       Title="CalculatorPage">
 
     <StackPanel Orientation="Vertical"
@@ -53,45 +55,82 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <cosm:LabelledText Grid.Row="0"
+
+                    <StackPanel Orientation="Vertical" 
+                                Grid.Row="0"
                                        Grid.Column="0"
-                                       x:Name="RouteLabel"
-                                       LabelText="Маршрут"
-                                       ContentText="{Binding ViewModel.TargetCity}"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Margin="0 10 0 0"/>
-                    <cosm:LabelledText Grid.Row="0"
-                                Grid.Column="1"
-                                x:Name="TransportLabel"
-                                LabelText="Номер ТС"
-                                ContentText="Binding"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                       Margin="0 10 0 0"/>
-                    <cosm:LabelledText Grid.Row="0"
-                                       Grid.Column="2"
-                                       x:Name="DateSentLabel"
-                                       LabelText="Дата отправки"
-                                       ContentText="Binding"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Margin="0 10 0 0"/>
-                    <cosm:LabelledText Grid.Row="0"
-                                       Grid.Column="3"
-                                       x:Name="DatereceivedLabel"
-                                       LabelText="Дата доставки"
-                                       ContentText="Binding"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Margin="0 10 0 0"/>
-                    <cosm:LabelledText Grid.Row="1"
-                                       Grid.Column="1"
-                                       x:Name="StatusLabel"
-                                       LabelText="Статус"
-                                       ContentText="Binding"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                         Margin="20 10 0 10">
+                        <TextBlock FontFamily="Inter" 
+                           FontSize="14"
+                           TextAlignment="Left"
+                           Foreground="{StaticResource SecondaryColor}"
+                           Text="Маршрут" />
+                        <TextBlock FontFamily="Inter" 
+                            FontSize="16"
+                            TextAlignment="Left"
+                            Text="{Binding ViewModel.TargetCity, Mode=OneWay}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical"
+            Margin="0 10 0 0"
+            Grid.Row="0"
+            Grid.Column="1">
+                        <TextBlock FontFamily="Inter" 
+               FontSize="14"
+               TextAlignment="Left"
+               Foreground="{StaticResource SecondaryColor}"
+               Text="Номер ТС" />
+                        <TextBlock FontFamily="Inter" 
+               FontSize="16"
+               TextAlignment="Left"
+               Text="{Binding ViewModel.Transport, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical"
+            Margin="0 10 0 0"
+            Grid.Row="0"
+            Grid.Column="2">
+                        <TextBlock FontFamily="Inter" 
+               FontSize="14"
+               TextAlignment="Left"
+               Foreground="{StaticResource SecondaryColor}"
+               Text="Дата отправки" />
+                        <TextBlock FontFamily="Inter" 
+               FontSize="16"
+               TextAlignment="Left"
+               Text="{Binding ViewModel.ShippingDate, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical"
+            Margin="0 10 0 0"
+            Grid.Row="0"
+            Grid.Column="3">
+                        <TextBlock FontFamily="Inter" 
+               FontSize="14"
+               TextAlignment="Left"
+               Foreground="{StaticResource SecondaryColor}"
+               Text="Дата доставки" />
+                        <TextBlock FontFamily="Inter" 
+               FontSize="16"
+               TextAlignment="Left"
+               Text="{Binding ViewModel.ArrivalDate, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical"
+            Margin="0 10 0 0"
+            Grid.Row="1"
+            Grid.Column="1">
+                        <TextBlock FontFamily="Inter" 
+               FontSize="14"
+               TextAlignment="Left"
+               Foreground="{StaticResource SecondaryColor}"
+               Text="Статус" />
+                        <TextBlock FontFamily="Inter" 
+               FontSize="16"
+               TextAlignment="Left"
+               Text="{Binding ViewModel.Status, Mode=OneWay}" />
+                    </StackPanel>
+
+
                     <StackPanel Grid.Row="1"
                                     Grid.Column="0"
                                     Orientation="Vertical"
@@ -101,12 +140,15 @@
                                    Foreground="{StaticResource SecondaryColor}">
                             Тип реестра</Label>
                         <RadioButton
+                            x:Name="Combined"
                                 Content="Сборный"
                                 GroupName="radio_group_one"
-                                IsChecked="True" />
-                        <RadioButton
+                            Checked="Radio_Checked"
+                                        IsChecked="True" />
+                        <RadioButton x:Name="Whole"
                                 Content="Целиковый"
-                                GroupName="radio_group_one" />
+                                GroupName="radio_group_one"
+                                     Checked="Radio_Checked"/>
                     </StackPanel>
                     <ui:Button Grid.ColumnSpan="2"
                                    Background="{StaticResource PrimaryColor}"
@@ -139,7 +181,7 @@
                                 FontFamily="Inter"
                                 FontSize="20"
                                 FontWeight="Bold"
-                                Text="биндинг на цену" />
+                                Text="{Binding ViewModel.TotalCost, Mode=OneWay}" />
                 </Grid>
             </ui:CardExpander.Header>
             <StackPanel Background="White"
@@ -153,31 +195,62 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0"
-                                Margin="0 10 0 0"
+                                Margin="20 10 0 0"
                                     HorizontalAlignment="Stretch">
                         <TextBlock FontFamily="Inter"
                                        FontWeight="Bold"
                                        FontSize="16"
                                        Text="Информация"/>
-                        <cosm:LabelledInfoLine
-                                x:Name="ClientNameLabel"
-                                LabelText="Наименование клиента"
-                                ContentText="Биндинг"
-                                InfoText="биндинг"/>
-                        <cosm:LabelledInfoLine
-                                x:Name="ContactLabel"
-                                LabelText="Контактное лицо"
-                                ContentText="Биндинг"
-                                InfoText="биндинг"/>
-                        <cosm:LabelledInfoLine
-                                x:Name="ManagerLabel"
-                                LabelText="Ответственный менеджер"
-                                ContentText="Биндинг"
-                                InfoText="биндинг"/>
+
+
+                            <Grid Margin="20 8 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                            Grid.Column="0"
+                                            Grid.Row="0"
+                                            Margin="5"
+                                            FontFamily="Inter"
+                                            FontSize="14"
+                                            Text="{Binding ViewModel.Client.ClientName, Mode=OneWay}" />
+                            <TextBlock Margin="5"
+                                            Grid.Column="1"
+                                            Grid.Row="0"
+                                            FontFamily="Inter"
+                                            FontSize="14"
+                                            Text="{Binding ViewModel.Client.ClientDoc, Mode=OneWay}" />
+                            <TextBlock Margin="5"
+                                            Grid.Column="0"
+                                            Grid.Row="1"
+                                            FontFamily="Inter"
+                                            FontSize="14"
+                                            Text="{Binding ViewModel.Client.ClientContactName, Mode=OneWay}" />
+                            <TextBlock Margin="5"
+                                            Grid.Column="1"
+                                            Grid.Row="1"
+                                            FontFamily="Inter"
+                                            FontSize="14"
+                                            Text="{Binding ViewModel.Client.ClientContactPhone, Mode=OneWay}" />
+                            <TextBlock Margin="5"
+                                            Grid.Column="0"
+                                            Grid.Row="2"
+                                            FontFamily="Inter"
+                                            FontSize="14"
+                                            Text="{Binding ViewModel.Client.ManagerName, Mode=OneWay}" />
+
+                            </Grid>
+                        
                     </StackPanel>
 
                     <StackPanel Grid.Column="1"
-                                Margin="0 10 0 0"
+                                Margin="20 10 0 0"
                             HorizontalAlignment="Stretch">
                         <TextBlock FontFamily="Inter"
                                FontWeight="Bold"
@@ -189,15 +262,17 @@
                                 PlaceholderText="Тариф по весу"
                                 SpinButtonPlacementMode="Hidden"
                                 Width="150"
-                                HorizontalAlignment="Left"/>
+                                HorizontalAlignment="Left"
+                                Value="{Binding ViewModel.Client.WeightPrice, Mode=TwoWay}"/>
                         <ui:NumberBox
                                 Maximum="10000"
                                 Minimum="0"
                                 PlaceholderText="Тариф по объему"
                                 SpinButtonPlacementMode="Hidden"
                                 Width="150"
-                                HorizontalAlignment="Left"/>
-                        <ComboBox 
+                                HorizontalAlignment="Left"
+                                Value="{Binding ViewModel.Client.VolumePrice, Mode=TwoWay}"/>
+                        <!--<ComboBox 
                                 Padding="5 0 0 0"
                                 x:Name="SchemaComboBox"
                                 Width="200"
@@ -209,13 +284,14 @@
                                 HorizontalAlignment="Left"
                                 Background="White"
                                 BorderBrush="{StaticResource PrimaryColor}"
-                                BorderThickness="1">
+                                BorderThickness="1"
+                            SelectedValue="{Binding ViewModel.Client., Mode=TwoWay}">
                             <ComboBox.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </ComboBox.Resources>
-                        </ComboBox>
+                        </ComboBox>-->
                     </StackPanel>
 
                     <StackPanel Grid.Column="2"
@@ -262,7 +338,7 @@
                                FontFamily="Inter"
                                FontSize="20"
                                FontWeight="Bold"
-                               Text="биндинг на цену" />
+                               Text="{Binding ViewModel.CargoCost, Mode=OneWay}" />
                 </Grid>
             </ui:CardExpander.Header>
             <StackPanel Background="White"
@@ -277,9 +353,9 @@
                     <ui:NumberBox x:Name="EntriesCountBox"
                                       Minimum="0"
                                       SmallChange="1"
-                                      Value="0"
                                       SpinButtonPlacementMode="Compact"
-                                      HorizontalAlignment="Left"/>
+                                      HorizontalAlignment="Left"
+                                      Value="{Binding ViewModel.Cargo.EntrancesCount, Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel x:Name="CargoPlacesPanel">
 

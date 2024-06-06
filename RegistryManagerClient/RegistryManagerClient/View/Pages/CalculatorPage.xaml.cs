@@ -24,15 +24,20 @@ namespace RegistryManagerClient.View.Pages
     /// </summary>
     public partial class CalculatorPage : Page
     {
-        
-
-
         public CalculatorViewModel ViewModel { get; }
         public CalculatorPage()
         {
             ViewModel = new CalculatorViewModel();
             DataContext = this;
             InitializeComponent();
+        }
+
+        private void Radio_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton bt = sender as RadioButton;
+            if (bt.Name == "Combined")
+                ViewModel.IsCombined = true;
+            else ViewModel.IsCombined = false;
         }
     }
 }

@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace RegistryManagerClient.ViewModels
 {
-    public partial class CalcAndDocParentViewModel : ObservableObject
+    public partial class CalcAndDocParentViewModel : ObservableRecipient
     {
         private bool _isInitialized = false;
         [ObservableProperty]
@@ -50,6 +51,7 @@ namespace RegistryManagerClient.ViewModels
         {
             UpdateNotes();
             UpdateCargo();
+            WeakReferenceMessenger.Default.Send(new CargoSelectedMessage(StatesService.Instance.GetState<CargoVM>()));
         }
         private void UpdateNotes()
         {

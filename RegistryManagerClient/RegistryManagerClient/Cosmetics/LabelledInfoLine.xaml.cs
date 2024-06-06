@@ -21,7 +21,7 @@ namespace RegistryManagerClient.Cosmetics
     public partial class LabelledInfoLine : UserControl
     {
         public static readonly DependencyProperty LabelTextProperty =
-           DependencyProperty.Register("LabelText", typeof(string), typeof(LabelledInfoLine), new PropertyMetadata(default(string)));
+           DependencyProperty.Register(nameof(LabelText), typeof(string), typeof(LabelledInfoLine), new PropertyMetadata(default(string)));
 
         public string LabelText
         {
