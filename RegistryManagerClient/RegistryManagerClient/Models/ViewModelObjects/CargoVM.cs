@@ -51,8 +51,14 @@ namespace RegistryManagerClient.Models.ViewModelObjects
             ReceiverClient = cargo.ReceiverClient;
             PaidByClient = cargo.PaidByClient;
             RegistryId = cargo.RegistryId;
-            CargoPlaces = cargo.CargoPlaces.Select(cp =>  new CargoPlaceVM(cp)).ToList();
-            SenderClientVM = new ClientVM(cargo.SenderClientNavigation);
+            CargoPlaces = ViewModelObjectsService.Instance
+                .LoadViewModels<CargoPlaceVM, CargoPlace>(x => x.CargoId == cargo.CargoId,
+                "Category");
+            SenderClientVM = ViewModelObjectsService.Instance
+                .LoadViewModel<ClientVM, Client>(x => x.ClientId == SenderClient, 
+                "JuridicalClients",
+                "PhysicalClients",
+                "Addresses");
         }
 
         public override Cargo ToEntity()

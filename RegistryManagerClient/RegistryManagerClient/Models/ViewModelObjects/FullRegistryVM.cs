@@ -58,7 +58,16 @@ namespace RegistryManagerClient.Models.ViewModelObjects
             LastEditor = registry.LastEditor;
             IsCombined = registry.IsCombined;
             Status = registry.Status.Name;
-            Cargos = registry.Cargos.Select(c => new CargoVM(c)).ToList(); 
+            Cargos = ViewModelObjectsService.Instance
+                .LoadViewModels<CargoVM, Cargo>
+                (x => x.RegistryId == registry.RegistryId, "AdditionalPackagingServices",
+                "CargoPlaces",
+                "ForwardingDocuments",
+                "OversizeServices",
+                "PaidByClientNavigation",
+                "ReceiverClientNavigation",
+                "Schema",
+                "SenderClientNavigation"); 
         }
 
         public override Registry ToEntity()
@@ -81,7 +90,7 @@ namespace RegistryManagerClient.Models.ViewModelObjects
 
         public static FullRegistryVM FindByKey(long key)
         {
-            return ViewModelObjectsService.Instance.LoadViewModel<FullRegistryVM, Registry>(x => x.RegistryId == key, "Cargo");
+            return ViewModelObjectsService.Instance.LoadViewModel<FullRegistryVM, Registry>(x => x.RegistryId == key, "Status", "AuthorNavigation");
         }
     }
 }

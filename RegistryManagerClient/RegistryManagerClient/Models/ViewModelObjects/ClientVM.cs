@@ -55,15 +55,18 @@ namespace RegistryManagerClient.Models.ViewModelObjects
         {
             if (c.JuridicalClients.Any())
             {
-                var client = c.JuridicalClients.First();
+                var client = EntitiesObjectsService.Instance
+                    .LoadEntity<JuridicalClient>(x => x.ClientId == c.ClientId, "ContactPeople");
                 ClientName = client.Name;
                 ClientDoc = client.Inn;
                 ClientContactName = $"{client.ContactPeople.FirstOrDefault().Name} {client.ContactPeople.FirstOrDefault().Surname}";
-                clientContactPhone = client.ContactPeople.FirstOrDefault().ContactPhones.FirstOrDefault().PhoneNumber;
+                clientContactPhone = EntitiesObjectsService.Instance
+                    .LoadEntity<ContactPhone>(x => x.ContactId == client.ContactPeople.FirstOrDefault().ContactId).PhoneNumber;
             }
             else
             {
-                var client = c.PhysicalClients.First();
+                var client = EntitiesObjectsService.Instance
+                    .LoadEntity<PhysicalClient>(x => x.ClientId == c.ClientId, "ClientPhones");
                 ClientName = $"{client.Name} {client.Surname}"; 
                 ClientDoc = $"{client.PassportSeries}{client.PassportNumber}";
                 ClientContactName = $"{client.Name} {client.Surname}";

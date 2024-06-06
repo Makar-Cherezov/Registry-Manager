@@ -30,7 +30,11 @@ namespace RegistryManagerClient.Services
             List < Expression < Func<TEntity, bool> >> keylist = new List<Expression<Func<TEntity, bool>>>() { keyFilter};
             return LoadViewModels<T, TEntity>(keylist, includeProperties).FirstOrDefault();
         }
-
+        public List<T> LoadViewModels<T, TEntity>(Expression<Func<TEntity, bool>> filter, params string[]? includeProperties) where T : IViewModelObject<TEntity>, new() where TEntity : class
+        {
+            List<Expression<Func<TEntity, bool>>> keylist = new List<Expression<Func<TEntity, bool>>>() { filter };
+            return LoadViewModels<T, TEntity>(keylist, includeProperties);
+        }
         public List<T> LoadViewModels<T, TEntity>(IEnumerable<Expression<Func<TEntity, bool>>>? filters = null, params string[]? includeProperties) where T : IViewModelObject<TEntity>, new() where TEntity : class
         {
             IQueryable<TEntity> query = _dbContext.Set<TEntity>();
