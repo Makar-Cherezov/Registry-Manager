@@ -1,4 +1,5 @@
-﻿using RegistryManagerClient.Models.Entities;
+﻿using Optional.Collections;
+using RegistryManagerClient.Models.Entities;
 using RegistryManagerClient.Services;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,10 @@ namespace RegistryManagerClient.Models.ViewModelObjects
 {
     public class ClientVM : IViewModelObject<Client>
     {
+        public string ClientName { get; set; }
+        public string ClientDoc { get; set; }
+        public string ClientContactName { get; set; }
+        public string clientContactPhone {  get; set; }
         public long ClientId { get; set; }
         public short? Manager { get; set; }
         public string? ManagerName { get; set; }
@@ -40,12 +45,31 @@ namespace RegistryManagerClient.Models.ViewModelObjects
             OversizeCalculates = client.OversizeCalculates;
             PersonalPrices = client.PersonalPrices;
             ForwarderId = client.ForwarderId;
-
             ManagerName = client.ManagerNavigation?.Name ?? string.Empty;
             ForwarderName = client.Forwarder?.Name ?? string.Empty;
-
-            // Load Addresses and convert them to AddressVM
             Addresses = client.Addresses.Select(a => new AddressVM(a)).ToList();
+            FillTypeClient(client);
+        }
+
+        private void FillTypeClient(Client c)
+        {
+            if (c.JuridicalClients.Any())
+            {
+                var client = c.JuridicalClients.First();
+                ClientName = client.Name;
+                ClientDoc = client.Inn;
+                ClientContactName = $"{client.ContactPeople.FirstOrDefault().Name} {client.ContactPeople.FirstOrDefault().Surname}";
+                clientContactPhone = client.ContactPeople.FirstOrDefault().ContactPhones.FirstOrDefault().PhoneNumber;
+            }
+            else
+            {
+                var client = c.PhysicalClients.First();
+                ClientName = "Физическое лицо";
+                ClientDoc = $"{client.PassportSeries}{client.PassportNumber}";
+                ClientContactName = $"{client.Name} {client.Surname}";
+                clientContactPhone = client.ClientPhones.FirstOrDefault().PhoneNumber;
+
+            }
         }
 
         public override Client ToEntity()

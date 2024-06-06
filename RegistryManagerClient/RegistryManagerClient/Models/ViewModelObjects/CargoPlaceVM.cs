@@ -43,11 +43,7 @@ namespace RegistryManagerClient.Models.ViewModelObjects
             OriginalPackage = cargoPlace.OriginalPackage;
             OriginalCondition = cargoPlace.OriginalCondition;
             CategoryId = cargoPlace.CategoryId;
-            var tryFindCategory = ViewModelObjectsService.Instance.FindEntityByKey<CargoCategory>(cargoPlace.CategoryId);
-            tryFindCategory.Match(
-                some: entity => CategoryName = entity.Name,
-                none: () => CategoryName = "Без категории"
-            );
+            CategoryName = cargoPlace.Category.Name;
         }
 
         public override CargoPlace ToEntity()

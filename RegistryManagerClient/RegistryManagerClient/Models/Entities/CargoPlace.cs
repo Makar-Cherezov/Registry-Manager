@@ -27,5 +27,7 @@ public partial class CargoPlace
 
     public short CategoryId { get; set; }
 
+    public virtual Cargo Cargo { get; set; } = null!;
+
     public virtual CargoCategory Category { get; set; } = null!;
 }

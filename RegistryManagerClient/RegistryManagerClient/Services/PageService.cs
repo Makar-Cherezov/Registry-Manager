@@ -25,6 +25,7 @@ namespace RegistryManagerClient.Services
             }
             return (T)_pages[type];
         }
+        
     }
 
 }

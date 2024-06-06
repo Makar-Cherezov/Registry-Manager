@@ -80,6 +80,7 @@ public partial class RegistryManagerContext : DbContext
             optionsBuilder.UseNpgsql(connectionString);
         }
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
@@ -227,6 +228,11 @@ public partial class RegistryManagerContext : DbContext
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.OriginalCondition).HasMaxLength(100);
             entity.Property(e => e.OriginalPackage).HasMaxLength(70);
+
+            entity.HasOne(d => d.Cargo).WithMany(p => p.CargoPlaces)
+                .HasForeignKey(d => d.CargoId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Place_Cargo");
 
             entity.HasOne(d => d.Category).WithMany(p => p.CargoPlaces)
                 .HasForeignKey(d => d.CategoryId)

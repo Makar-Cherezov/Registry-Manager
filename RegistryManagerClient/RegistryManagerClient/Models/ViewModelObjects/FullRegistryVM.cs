@@ -32,6 +32,7 @@ namespace RegistryManagerClient.Models.ViewModelObjects
 
         public bool IsCombined { get; set; }
         public string Status { get; set; }
+        public List<Cargo>
 
 
         // Default constructor

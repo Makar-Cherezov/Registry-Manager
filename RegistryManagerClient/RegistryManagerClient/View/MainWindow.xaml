@@ -35,8 +35,8 @@
                     <ui:NavigationView.MenuItems >
                         <ui:NavigationViewItem x:Name="HomeNav" Icon="{ui:SymbolIcon Home24}" Click="HomeNav_Click" />
                         <ui:NavigationViewItem x:Name="SaveButton" Icon="{ui:SymbolIcon Save24}" />
-                        <ui:NavigationViewItem x:Name="CalculationsNav" Content="Расчёты" Click="CalculationsNav_Click"  />
-                        <ui:NavigationViewItem x:Name="DocumentsNav"  Content="Документы" Click="DocumentsNav_Click" />
+                        <ui:NavigationViewItem x:Name="CalculationsNav" Click="CalculationsNav_Click"  Content="Расчёты"  />
+                        <ui:NavigationViewItem x:Name="DocumentsNav" Click="DocumentsNav_Click" Content="Документы"  />
                     </ui:NavigationView.MenuItems>
                 </ui:NavigationView>
 

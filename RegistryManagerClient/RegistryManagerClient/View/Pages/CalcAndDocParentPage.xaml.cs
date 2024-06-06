@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RegistryManagerClient.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +20,9 @@ namespace RegistryManagerClient.View.Pages
     public partial class CalcAndDocParentPage : Page
     {
         public ViewModels.CalcAndDocParentViewModel ViewModel { get; }
-        public CalcAndDocParentPage(long regID)
+        public CalcAndDocParentPage()
         {
+            long regID = PageService.Instance.GetPage<HomePage>().ViewModel.SelectedRegistry!.RegistryId;
             ViewModel = new ViewModels.CalcAndDocParentViewModel(regID);
             InitializeComponent();
             WorkAreaFrame.Navigate(new CalculatorPage());

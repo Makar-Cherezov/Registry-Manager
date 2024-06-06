@@ -24,11 +24,10 @@ namespace RegistryManagerClient.Models.ViewModelObjects
 
         public string? PaidByClientName { get; set; }
         public string ReceiverClientName { get; set; } = null!;
-        public string SenderClientName { get; set; } = null!;
+        public ClientVM SenderClientVM { get; set; } = null!;
 
         public List<CargoPlaceVM> CargoPlaces { get; set; } = new List<CargoPlaceVM>();
-        public string? Manager { get; set; } 
-        private short? ManagerID { get; set; }
+
 
         // Default constructor
         public CargoVM() { }
@@ -52,16 +51,8 @@ namespace RegistryManagerClient.Models.ViewModelObjects
             ReceiverClient = cargo.ReceiverClient;
             PaidByClient = cargo.PaidByClient;
             RegistryId = cargo.RegistryId;
-
-
-            ViewModelObjectsService.Instance
-                .FindEntityByKey<Client>(cargo.SenderClient)
-                .Match(some: entity => ManagerID = entity.Manager, none: () => ManagerID = null);
-
-
-            
-           
-            // Load CargoPlaces and convert them to CargoPlaceVM
+            CargoPlaces = cargo.CargoPlaces.Select(cp =>  new CargoPlaceVM(cp)).ToList();
+            SenderClientVM = new ClientVM(cargo.SenderClientNavigation);
         }
 
         public override Cargo ToEntity()
@@ -81,7 +72,7 @@ namespace RegistryManagerClient.Models.ViewModelObjects
                 ReceiverClient = ReceiverClient,
                 PaidByClient = PaidByClient,
                 RegistryId = RegistryId,
-                ///CargoPlaces = CargoPlaces.Select(cp => cp.ToEntity()).ToList()
+                CargoPlaces = CargoPlaces.Select(cp => cp.ToEntity()).ToList()
             };
         }
     }

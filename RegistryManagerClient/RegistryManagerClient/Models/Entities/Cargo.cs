@@ -33,6 +33,8 @@ public partial class Cargo
 
     public virtual ICollection<AdditionalPackagingService> AdditionalPackagingServices { get; set; } = new List<AdditionalPackagingService>();
 
+    public virtual ICollection<CargoPlace> CargoPlaces { get; set; } = new List<CargoPlace>();
+
     public virtual ICollection<ForwardingDocument> ForwardingDocuments { get; set; } = new List<ForwardingDocument>();
 
     public virtual ICollection<OversizeService> OversizeServices { get; set; } = new List<OversizeService>();

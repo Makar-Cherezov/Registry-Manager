@@ -15,6 +15,7 @@ namespace RegistryManagerClient.Models.ViewModelObjects
         public short? Entrance { get; set; }
         public string? Schedule { get; set; }
         public long Owner { get; set; }
+        public string? Street { get; set; }
         public short DistrictId { get; set; }
         public string DistrictName { get; set; } = null!;
         public string City { get; set; } = null!;
@@ -38,6 +39,7 @@ namespace RegistryManagerClient.Models.ViewModelObjects
             Entrance = address.Entrance;
             Schedule = address.Schedule;
             Owner = address.Owner;
+            Street = address.Street;
             DistrictId = address.DistrictId;
             DistrictName = address.District?.Name ?? string.Empty;
             City = address.District?.City?.Name ?? string.Empty;
@@ -57,13 +59,15 @@ namespace RegistryManagerClient.Models.ViewModelObjects
                 Entrance = Entrance,
                 Schedule = Schedule,
                 Owner = Owner,
+                Street = Street,
                 DistrictId = DistrictId,
                 District = new District { DistrictId = DistrictId, Name = DistrictName }
             };
         }
+        // Add rest params
         public string GetWholeAddress()
         {
-            return $"{Region}, г {City}, р-н {DistrictName}, ";
+            return $"{Region}, г {City}, р-н {DistrictName}, ул {Street}, д {Building}";
         }
     }
 }

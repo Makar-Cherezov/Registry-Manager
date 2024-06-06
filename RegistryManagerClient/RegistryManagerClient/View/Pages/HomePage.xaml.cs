@@ -34,7 +34,7 @@ namespace RegistryManagerClient.View.Pages
             var mainWindow = Application.Current.MainWindow as MainWindow;
             if (mainWindow != null)
             {
-                mainWindow.MainFrame.Navigate(new CalcAndDocParentPage(ViewModel.SelectedRegistry!.RegistryId));
+                mainWindow.MainFrame.Navigate(PageService.Instance.GetPage<CalcAndDocParentPage>());
                 mainWindow.ViewModel.CalcDocVisibility = Visibility.Visible;
             }
         }

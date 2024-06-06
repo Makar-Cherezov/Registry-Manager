@@ -25,6 +25,8 @@ public partial class Address
 
     public short DistrictId { get; set; }
 
+    public string? Street { get; set; }
+
     public virtual District District { get; set; } = null!;
 
     public virtual Client OwnerNavigation { get; set; } = null!;
