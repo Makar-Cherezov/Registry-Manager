@@ -2,6 +2,8 @@
 using RegistryManagerClient.Models.Entities;
 using RegistryManagerClient.Models.ViewModelObjects;
 using Optional;
+using System.Linq.Expressions;
+using System.Reflection;
 
 
 namespace RegistryManagerClient.Services
@@ -51,6 +53,26 @@ namespace RegistryManagerClient.Services
         {
             TEntity? entity = _dbContext.Set<TEntity>().Find(keyValue);
             return entity == null ? Option.None<TEntity>() : Option.Some(entity);
+        }
+
+        public List<T> LoadFilteredViewModels<T, TEntity>(IEnumerable<Expression<Func<TEntity, bool>>> filters) where T : IViewModelObject<TEntity>, new() where TEntity : class
+        {
+            IQueryable<TEntity> query = _dbContext.Set<TEntity>();
+
+            foreach (var filter in filters)
+            {
+                query = query.Where(filter);
+            }
+
+            var entities = query.ToList();
+            var viewModels = new List<T>();
+            foreach (var entity in entities)
+            {
+                var viewModel = new T();
+                viewModel.FromEntity(entity);
+                viewModels.Add(viewModel);
+            }
+            return viewModels;
         }
     }
 }
