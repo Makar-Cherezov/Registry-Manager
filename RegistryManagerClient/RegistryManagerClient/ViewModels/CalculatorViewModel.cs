@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using RegistryManagerClient.Models.ViewModelObjects;
 using RegistryManagerClient.Services;
+using RegistryManagerClient.View.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ObjectiveC;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -101,6 +104,11 @@ namespace RegistryManagerClient.ViewModels
         partial void OnCargoChanged(CargoVM value)
         {
             InitializeViewModel();
+        }
+        [RelayCommand]
+        private void OnCtrlRPressed(object sender)
+        {
+                InitializeViewModel();
         }
     }
 }

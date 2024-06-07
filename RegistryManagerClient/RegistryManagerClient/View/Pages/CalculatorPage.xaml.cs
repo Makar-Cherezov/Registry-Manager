@@ -30,6 +30,7 @@ namespace RegistryManagerClient.View.Pages
         {
             ViewModel = new CalculatorViewModel();
             DataContext = this;
+            this.KeyDown += Page_KeyDown;
             InitializeComponent();
         }
 
@@ -40,7 +41,7 @@ namespace RegistryManagerClient.View.Pages
                 ViewModel.IsCombined = true;
             else ViewModel.IsCombined = false;
         }
-        private void EntriesCountBox_KeyDown(object sender, KeyEventArgs e)
+        private void CountBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -52,6 +53,15 @@ namespace RegistryManagerClient.View.Pages
                 }
             }
         }
-
+        private void Page_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.R && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                if (ViewModel.CtrlRPressedCommand.CanExecute(null))
+                {
+                    ViewModel.CtrlRPressedCommand.Execute(null);
+                }
+            }
+        }
     }
 }
