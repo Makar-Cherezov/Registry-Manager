@@ -24,8 +24,10 @@ namespace RegistryManagerClient
         {
             ViewModel = new ViewModels.MainWindowViewModel();
             DataContext = this;
+            
             InitializeComponent();
             MainFrame.Navigate(PageService.Instance.GetPage<HomePage>());
+            SaveNotification.Visibility = Visibility.Collapsed;
         }
 
         private void CalculationsNav_Click(object sender, RoutedEventArgs e)
@@ -42,8 +44,19 @@ namespace RegistryManagerClient
 
         private void HomeNav_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(PageService.Instance.GetPage<HomePage>());
+            var page = PageService.Instance.GetPage<HomePage>();
+            page.RegList.SelectedIndex = -1;
+            MainFrame.Navigate(page);
             ViewModel.CalcDocVisibility = Visibility.Hidden;
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaveNotification.Visibility = Visibility.Visible;
+
+            PageService.Instance.GetPage<CalculatorPage>().ViewModel.SaveCargoCommand.Execute(null);
+          
+            SaveNotification.Visibility = Visibility.Collapsed;
         }
     }
 }

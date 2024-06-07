@@ -38,14 +38,21 @@ namespace RegistryManagerClient.ViewModels
         }
         private void InitializeViewModel()
         {
-            _isInitialized = true;
+            try
+            {
+                _isInitialized = true;
             SelectedCargoIndex = 0;
             RegistryViewModel reg = StatesService.Instance.GetState<RegistryViewModel>();
-            StatesService.Instance.SetState<FullRegistryVM>(FullRegistryVM.FindByKey(reg.RegistryId));
-            Registry = StatesService.Instance.GetState<FullRegistryVM>();
-            Cargos = Registry.Cargos;
-            UpdateNotes();
-            UpdateCargo();
+                if (reg != null)
+                {
+                    StatesService.Instance.SetState<FullRegistryVM>(FullRegistryVM.FindByKey(reg.RegistryId));
+                    Registry = StatesService.Instance.GetState<FullRegistryVM>();
+                    Cargos = Registry.Cargos;
+                    UpdateNotes();
+                    UpdateCargo();
+                }
+            }
+            catch (Exception ex) { }
         }
 
         private void UpdateCargo()

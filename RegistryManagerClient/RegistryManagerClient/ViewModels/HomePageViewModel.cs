@@ -37,6 +37,7 @@ namespace RegistryManagerClient.ViewModels
         partial void OnSelectedRegistryChanged(RegistryViewModel? value)
         {
             WeakReferenceMessenger.Default.Send(new RegistrySelectedMessage(value));
+
         }
 
     }

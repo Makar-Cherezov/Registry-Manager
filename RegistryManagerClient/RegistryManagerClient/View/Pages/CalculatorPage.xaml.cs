@@ -30,7 +30,7 @@ namespace RegistryManagerClient.View.Pages
         {
             ViewModel = new CalculatorViewModel();
             DataContext = this;
-            this.KeyDown += Page_KeyDown;
+            this.KeyDown += Page_Reload;
             InitializeComponent();
         }
 
@@ -41,27 +41,34 @@ namespace RegistryManagerClient.View.Pages
                 ViewModel.IsCombined = true;
             else ViewModel.IsCombined = false;
         }
-        private void CountBox_KeyDown(object sender, KeyEventArgs e)
+        private void LoseFocus_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                if (sender is NumberBox box)
-                {
-                    var bindingExpression = box.GetBindingExpression(NumberBox.ValueProperty);
-                    bindingExpression?.UpdateSource();
-                    ((UIElement)e.OriginalSource).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-                }
+                ((UIElement)e.OriginalSource).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
         }
-        private void Page_KeyDown(object sender, KeyEventArgs e)
+        private void Page_Reload(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.R && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-            {
+                UpdatePage();
+        }
+        private void UpdatePage()
+        {
+            
                 if (ViewModel.CtrlRPressedCommand.CanExecute(null))
                 {
                     ViewModel.CtrlRPressedCommand.Execute(null);
                 }
-            }
+            
+        }
+        private void Page_Reload(object sender, RoutedEventArgs e)
+        {
+            //if (sender is NumberBox box)
+            //{
+            //    (sender as NumberBox).GetBindingExpression(NumberBox.ValueProperty).UpdateSource();
+            //}
+            //UpdatePage();
         }
     }
 }

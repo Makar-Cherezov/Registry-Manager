@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using RegistryManagerClient.Services;
 namespace RegistryManagerClient.Models.Entities;
 
-public partial class Cargo
+public partial class Cargo : IEntity
 {
+    public object GetPrimaryKeyValue() => CargoId;
     public long CargoId { get; set; }
 
     public string? BillingNumber { get; set; }

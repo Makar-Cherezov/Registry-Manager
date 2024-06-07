@@ -34,14 +34,14 @@
                                    Visibility="{Binding ViewModel.CalcDocVisibility, Mode=OneWay}">
                     <ui:NavigationView.MenuItems >
                         <ui:NavigationViewItem x:Name="HomeNav" Icon="{ui:SymbolIcon Home24}" Click="HomeNav_Click" />
-                        <ui:NavigationViewItem x:Name="SaveButton" Icon="{ui:SymbolIcon Save24}" />
+                        <ui:NavigationViewItem x:Name="SaveButton" Icon="{ui:SymbolIcon Save24}" Click="SaveButton_Click" />
                         <ui:NavigationViewItem x:Name="CalculationsNav" Click="CalculationsNav_Click"  Content="Расчёты"  />
                         <ui:NavigationViewItem x:Name="DocumentsNav" Click="DocumentsNav_Click" Content="Документы"  />
                     </ui:NavigationView.MenuItems>
                 </ui:NavigationView>
 
-                
-                
+
+
             </StackPanel>
             <TextBlock 
                 Text="Filename"
@@ -68,6 +68,13 @@
                     Symbol="PersonCircle32"
                     FontSize="25"/>
             </StackPanel>
+            <ui:Card Content="Сохранение..."
+                 HorizontalAlignment="Left" 
+                 Margin="37,0,0,0" 
+                 FontFamily="Inter"
+                 FontSize="14"
+                 x:Name="SaveNotification" Grid.Column="1"
+                     Grid.Row="0"/>
         </Grid>
         <Frame 
             x:Name="MainFrame"

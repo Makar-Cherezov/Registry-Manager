@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using RegistryManagerClient.Models.ViewModelObjects;
 using RegistryManagerClient.Services;
+using RegistryManagerClient.Models.Entities;
 using RegistryManagerClient.View.Pages;
 using System;
 using System.Collections.Generic;
@@ -70,8 +71,8 @@ namespace RegistryManagerClient.ViewModels
             float vprice = 0;
             foreach (CargoPlaceVM p in Cargo.CargoPlaces)
             {
-                wprice += Client.WeightPrice * p.Weight.GetValueOrDefault();
-                vprice += Client.VolumePrice * p.Volume.GetValueOrDefault();
+                wprice += Client.WeightPrice * p.Weight.GetValueOrDefault() * p.PlacesCount;
+                vprice += Client.VolumePrice * p.Volume.GetValueOrDefault() * p.PlacesCount;
             }
             CargoCost += Math.Max(wprice, vprice);
         }
@@ -108,7 +109,13 @@ namespace RegistryManagerClient.ViewModels
         [RelayCommand]
         private void OnCtrlRPressed(object sender)
         {
-                InitializeViewModel();
+            CalculateCost();
         }
+        [RelayCommand]
+        private void SaveCargo(object sender)
+        {
+            ViewModelObjectsService.Instance.SaveViewModel<CargoVM, Cargo>(Cargo);
+        }
+
     }
 }

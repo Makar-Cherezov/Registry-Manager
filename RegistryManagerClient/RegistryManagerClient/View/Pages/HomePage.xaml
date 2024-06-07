@@ -295,6 +295,7 @@
                     </ComboBox>
                     
                     <ui:ListView
+                        x:Name="RegList"
                     Grid.Column="0"
                     Grid.ColumnSpan="4"
                     Grid.Row="1"

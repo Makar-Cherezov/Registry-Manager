@@ -7,6 +7,7 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using System.Windows.Navigation;
 using System.Collections.Generic;
+using System.Security.Principal;
 
 
 namespace RegistryManagerClient.Services
@@ -64,6 +65,34 @@ namespace RegistryManagerClient.Services
             }
             return viewModels;
         }
+
+        public void SaveViewModel<T, TEntity>(T viewModel) where T : IViewModelObject<TEntity>, new() where TEntity : class, IEntity
+        {
+            
+                var entity = viewModel.ToEntity();
+
+                // Dynamically find the entity based on its primary key value
+                var existingEntity = _dbContext.Set<TEntity>()
+                                              .Local
+                                              .OfType<TEntity>()
+                                              .FirstOrDefault(e => e.GetPrimaryKeyValue().Equals(entity.GetPrimaryKeyValue()));
+
+                if (existingEntity != null)
+                {
+                    // Update existing entity
+                    _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
+                }
+                else
+                {
+                    // Add new entity
+                    _dbContext.Set<TEntity>().Add(entity);
+                }
+            
+
+            // Save changes to the database
+            _dbContext.SaveChanges();
+        }
+
 
     }
 }
