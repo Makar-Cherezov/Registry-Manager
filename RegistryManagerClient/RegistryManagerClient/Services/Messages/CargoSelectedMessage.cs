@@ -1,4 +1,5 @@
 ﻿using RegistryManagerClient.Models.ViewModelObjects;
+using RegistryManagerClient.Services;
 
 public class CargoSelectedMessage
 {
@@ -7,5 +8,6 @@ public class CargoSelectedMessage
     public CargoSelectedMessage(CargoVM selectedCargo)
     {
         SelectedCargo = selectedCargo;
+        StatesService.Instance.SetState(selectedCargo);
     }
 }

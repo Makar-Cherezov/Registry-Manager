@@ -355,7 +355,8 @@
                                       SmallChange="1"
                                       SpinButtonPlacementMode="Compact"
                                       HorizontalAlignment="Left"
-                                      Value="{Binding ViewModel.Cargo.EntrancesCount, Mode=TwoWay}"/>
+                                      Value="{Binding ViewModel.Cargo.EntrancesCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      KeyDown="EntriesCountBox_KeyDown"/>
                 </StackPanel>
                 <StackPanel x:Name="CargoPlacesPanel">
 

@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wpf.Ui.Controls;
 
 namespace RegistryManagerClient.View.Pages
 {
@@ -39,5 +40,18 @@ namespace RegistryManagerClient.View.Pages
                 ViewModel.IsCombined = true;
             else ViewModel.IsCombined = false;
         }
+        private void EntriesCountBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (sender is NumberBox box)
+                {
+                    var bindingExpression = box.GetBindingExpression(NumberBox.ValueProperty);
+                    bindingExpression?.UpdateSource();
+                    ((UIElement)e.OriginalSource).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                }
+            }
+        }
+
     }
 }

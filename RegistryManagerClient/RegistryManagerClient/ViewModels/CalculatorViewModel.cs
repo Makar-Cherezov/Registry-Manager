@@ -98,6 +98,9 @@ namespace RegistryManagerClient.ViewModels
         {
             Cargo = StatesService.Instance.GetState<CargoVM>(); 
         }
-        
+        partial void OnCargoChanged(CargoVM value)
+        {
+            InitializeViewModel();
+        }
     }
 }
