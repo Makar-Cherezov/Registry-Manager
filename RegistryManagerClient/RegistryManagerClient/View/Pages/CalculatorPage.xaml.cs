@@ -70,5 +70,10 @@ namespace RegistryManagerClient.View.Pages
             //}
             //UpdatePage();
         }
+
+        private void AddCargoButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

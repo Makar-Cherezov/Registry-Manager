@@ -114,8 +114,17 @@ namespace RegistryManagerClient.ViewModels
         [RelayCommand]
         private void SaveCargo(object sender)
         {
-            ViewModelObjectsService.Instance.SaveViewModel<CargoVM, Cargo>(Cargo);
+            ViewModelObjectsService.Instance.SaveCargo(Cargo);
         }
-
+        [RelayCommand]
+        private void OnAddCargoPlace(object sender)
+        {
+            CargoPlaceVM cp = new CargoPlaceVM();
+            cp.CargoId = Cargo.CargoId;
+            cp.PlaceId = null;
+            cp.CategoryId = 0;
+            Cargo.CargoPlaces.Add(cp);
+            WeakReferenceMessenger.Default.Send(new CargoSelectedMessage(StatesService.Instance.GetState<CargoVM>()));
+        }
     }
 }

@@ -68,30 +68,37 @@ namespace RegistryManagerClient.Services
 
         public void SaveViewModel<T, TEntity>(T viewModel) where T : IViewModelObject<TEntity>, new() where TEntity : class, IEntity
         {
-            
-                var entity = viewModel.ToEntity();
 
-                // Dynamically find the entity based on its primary key value
+            var entity = viewModel.ToEntity();
+            if (entity.GetPrimaryKeyValue() != null)
+            {
                 var existingEntity = _dbContext.Set<TEntity>()
-                                              .Local
-                                              .OfType<TEntity>()
-                                              .FirstOrDefault(e => e.GetPrimaryKeyValue().Equals(entity.GetPrimaryKeyValue()));
-
+                                          .Find(entity.GetPrimaryKeyValue());
                 if (existingEntity != null)
                 {
                     // Update existing entity
                     _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
                 }
-                else
-                {
-                    // Add new entity
-                    _dbContext.Set<TEntity>().Add(entity);
-                }
-            
+            }
 
-            // Save changes to the database
+            else
+            {
+                // Add new entity
+                _dbContext.Set<TEntity>().Add(entity);
+            }
+
             _dbContext.SaveChanges();
         }
+        public void SaveCargo(CargoVM cargoVM)
+        {
+            foreach (CargoPlaceVM cp in cargoVM.CargoPlaces)
+            {
+                SaveViewModel<CargoPlaceVM, CargoPlace>(cp);
+            }
+            SaveViewModel<ClientVM, Client>(cargoVM.SenderClientVM);
+            SaveViewModel<CargoVM, Cargo>(cargoVM);
+        }
+
 
 
     }

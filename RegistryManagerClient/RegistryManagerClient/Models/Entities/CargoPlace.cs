@@ -1,11 +1,13 @@
-﻿using System;
+﻿using RegistryManagerClient.Services;
+using System;
 using System.Collections.Generic;
 
 namespace RegistryManagerClient.Models.Entities;
 
-public partial class CargoPlace
+public partial class CargoPlace : IEntity
 {
-    public long PlaceId { get; set; }
+
+    public long? PlaceId { get; set; }
 
     public long CargoId { get; set; }
 
@@ -30,4 +32,9 @@ public partial class CargoPlace
     public virtual Cargo Cargo { get; set; } = null!;
 
     public virtual CargoCategory Category { get; set; } = null!;
+
+    public object GetPrimaryKeyValue()
+    {
+        return PlaceId;
+    }
 }

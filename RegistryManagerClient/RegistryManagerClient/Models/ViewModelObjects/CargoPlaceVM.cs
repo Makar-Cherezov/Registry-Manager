@@ -10,7 +10,7 @@ namespace RegistryManagerClient.Models.ViewModelObjects
 {
     public class CargoPlaceVM : IViewModelObject<CargoPlace>
     {
-        public long PlaceId { get; set; }
+        public long? PlaceId { get; set; }
         public long CargoId { get; set; }
         public float? Weight { get; set; }
         public float? Volume { get; set; }

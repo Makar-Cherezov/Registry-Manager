@@ -1,9 +1,10 @@
-﻿using System;
+﻿using RegistryManagerClient.Services;
+using System;
 using System.Collections.Generic;
 
 namespace RegistryManagerClient.Models.Entities;
 
-public partial class Client
+public partial class Client : IEntity
 {
     public long ClientId { get; set; }
 
@@ -38,4 +39,9 @@ public partial class Client
     public virtual Manager? ManagerNavigation { get; set; }
 
     public virtual ICollection<PhysicalClient> PhysicalClients { get; set; } = new List<PhysicalClient>();
+
+    public object GetPrimaryKeyValue()
+    {
+        return ClientId;
+    }
 }

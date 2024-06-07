@@ -491,7 +491,8 @@ KeyDown="LoseFocus_KeyDown"             FontSize="14"
                          Foreground="White"
                          CornerRadius="5"
                          FontSize="16"
-                         Icon="{ui:SymbolIcon AddCircle24}"/>
+                         Icon="{ui:SymbolIcon AddCircle24}"
+                         Command="{Binding ViewModel.AddCargoPlaceCommand}"/>
             </StackPanel>
         </ui:CardExpander>
 

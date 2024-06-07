@@ -41,13 +41,13 @@
                                        FontFamily="Inter"
                                        FontSize="14"
                                        Width="300"
-                                       PlaceholderText="Экспедитор"
+                                       PlaceholderText="Отправитель"
                                        Margin="0 10 20 20"/>
                     <ui:AutoSuggestBox x:Name="ReceiverBox"
                                        FontFamily="Inter"
                                        FontSize="14"
                                        Width="300"
-                                       PlaceholderText="Экспедитор"
+                                       PlaceholderText="Получатель"
                                        Margin="0 10 20 20"/>
 
 

@@ -50,13 +50,19 @@ namespace RegistryManagerClient
             ViewModel.CalcDocVisibility = Visibility.Hidden;
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             SaveNotification.Visibility = Visibility.Visible;
 
             PageService.Instance.GetPage<CalculatorPage>().ViewModel.SaveCargoCommand.Execute(null);
           
             SaveNotification.Visibility = Visibility.Collapsed;
+            var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+            {
+                Title = "Изменения сохранены"
+            };
+
+            _ = await uiMessageBox.ShowDialogAsync();
         }
     }
 }
