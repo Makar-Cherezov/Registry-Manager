@@ -22,8 +22,7 @@ namespace RegistryManagerClient.View.Pages
         public ViewModels.CalcAndDocParentViewModel ViewModel { get; }
         public CalcAndDocParentPage()
         {
-            long regID = PageService.Instance.GetPage<HomePage>().ViewModel.SelectedRegistry!.RegistryId;
-            ViewModel = new ViewModels.CalcAndDocParentViewModel(regID);
+            ViewModel = new ViewModels.CalcAndDocParentViewModel();
             DataContext = this;
             InitializeComponent();
             WorkAreaFrame.Navigate(PageService.Instance.GetPage<CalculatorPage>());

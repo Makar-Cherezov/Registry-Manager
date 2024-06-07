@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
+using RegistryManagerClient.Services.Messages;
 
 namespace RegistryManagerClient.ViewModels
 {
@@ -24,18 +25,23 @@ namespace RegistryManagerClient.ViewModels
         private string _clientNotes;
         [ObservableProperty]
         private string _cargoNotes;
-        public CalcAndDocParentViewModel(long regID)
+        public CalcAndDocParentViewModel()
         {
+            WeakReferenceMessenger.Default.Register<RegistrySelectedMessage>(this, (r, message) =>
+            {
+                InitializeViewModel();
+            });
             if (!_isInitialized)
             {
-                InitializeViewModel(regID);
+                InitializeViewModel();
             }
         }
-        private void InitializeViewModel(long regID)
+        private void InitializeViewModel()
         {
             _isInitialized = true;
             SelectedCargoIndex = 0;
-            StatesService.Instance.SetState<FullRegistryVM>(FullRegistryVM.FindByKey(regID));
+            RegistryViewModel reg = StatesService.Instance.GetState<RegistryViewModel>();
+            StatesService.Instance.SetState<FullRegistryVM>(FullRegistryVM.FindByKey(reg.RegistryId));
             Registry = StatesService.Instance.GetState<FullRegistryVM>();
             Cargos = Registry.Cargos;
             UpdateNotes();
@@ -44,6 +50,8 @@ namespace RegistryManagerClient.ViewModels
 
         private void UpdateCargo()
         {
+            if (SelectedCargoIndex < 0)
+                SelectedCargoIndex = 0;
             StatesService.Instance.SetState<CargoVM>(Registry.Cargos[SelectedCargoIndex]);
         }
 
