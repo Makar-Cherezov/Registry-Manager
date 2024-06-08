@@ -75,5 +75,9 @@ namespace RegistryManagerClient.View.Pages
         {
 
         }
+        private void DeleteCP(object sender, RoutedEventArgs e)
+        {
+            ViewModel.DeleteCargoPlaceCommand.Execute((sender as CargoPlaceVM));
+        }
     }
 }

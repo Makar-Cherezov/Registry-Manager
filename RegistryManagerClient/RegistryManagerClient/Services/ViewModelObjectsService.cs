@@ -100,6 +100,14 @@ namespace RegistryManagerClient.Services
         }
 
 
+        public void DeleteCargoPlace(CargoPlaceVM cp)
+        {
+            
+                var entityStub = new CargoPlace { PlaceId = cp.PlaceId }; // Replace primaryKeyValue with the actual primary key value
+                _dbContext.CargoPlaces.Attach(entityStub); // Replace YourEntities with the DbSet property name
+                _dbContext.Entry(entityStub).State = EntityState.Deleted;
+                _dbContext.SaveChanges();
 
+        }
     }
 }

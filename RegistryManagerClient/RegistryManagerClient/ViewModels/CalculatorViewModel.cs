@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.InteropServices.ObjectiveC;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection.Metadata;
 
 namespace RegistryManagerClient.ViewModels
 {
@@ -125,6 +126,21 @@ namespace RegistryManagerClient.ViewModels
             cp.CategoryId = 0;
             Cargo.CargoPlaces.Add(cp);
             WeakReferenceMessenger.Default.Send(new CargoSelectedMessage(StatesService.Instance.GetState<CargoVM>()));
+        }
+        [RelayCommand]
+        private void OnDeleteCargoPlace(CargoPlaceVM cp)
+        {
+            //var itemToRemove = place as CargoPlaceVM;
+            if (cp.PlaceId == null)
+            {
+                Cargo.CargoPlaces.Remove(cp);
+
+            }
+            else
+            {
+                Cargo.CargoPlaces.Remove(cp);
+                ViewModelObjectsService.Instance.DeleteCargoPlace(cp);
+            }
         }
     }
 }
