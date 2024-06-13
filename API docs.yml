@@ -376,6 +376,12 @@ paths:
               - 0
               - 1
             type: integer
+        - name: clientID
+          in: path
+          required: true
+          schema: 
+            type: integer
+            format: int64
       security:
         - admin:
           - extended-scope  
