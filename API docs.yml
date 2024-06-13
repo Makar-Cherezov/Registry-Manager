@@ -668,6 +668,9 @@ paths:
       tags: 
         - users
       summary: Регистрация пользователя
+      security:
+        - admin:
+          - extended-scope
       requestBody:
         content:
           application/json:  
