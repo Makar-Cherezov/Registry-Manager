@@ -1,0 +1,933 @@
+openapi: 3.0.0
+info:
+  title: Менеджер реестров - API
+  description: Часть функций системы выполняется на клиенте, поэтому в эндпоинтах учтены не все заявленные функции.
+  version: 1.0.0
+  # user - add new account
+tags:
+ 
+  - name: data
+    description: Функции, связанные с изменением справочной информации
+  - name: registries
+    description: Функции, связанные непосредственно с созданием и обработкой реестров
+  - name: users
+    description: Функции, связанные с данными пользователей системы
+
+paths:
+  /registries: 
+    get:
+      tags:
+        - registries
+      summary: Получить список реестров (и краткой информации по ним) для загрузки меню
+      parameters:
+        - name: name
+          required: false
+          description: Название реестра для поиска в базе данных
+          in: query
+          schema: 
+            type: string
+            format: string
+            example: Новосибирск-12345-13.06.2024 целиковый
+        - name: authorID
+          description: Идентификатор автора реестра для фильтрации реестров
+          in: query
+          required: false
+          schema: 
+            type: integer
+            format: int16 
+            example: 5
+        - name: statusID
+          description: Идентификатор статуса реестра для фильтрации реестров
+          in: query
+          required: false
+          schema: 
+            type: integer
+            format: int16 
+            example: 2
+        - name: date
+          description: Дата создания реестра для фильтрации реестров
+          in: query
+          required: false
+          schema: 
+            type: string
+            format: DD.MM.YYYY 
+            example: 13.06.2024            
+      security:
+        - operator:
+          - basic-scope
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name: 
+                    description: Название реестра
+                    type: string
+                    format: string
+                    example: Новосибирск-12345-13.06.2024 целиковый
+                  status:
+                    description: Статус реестра. Передаётся кодом, парсится в enum.
+                    type: integer
+                    format: int16
+                    example: 1
+                  date:
+                    description: Дата последнего изменения реестра
+                    type: string
+                    format: DD.MM.YYYY
+                    example: 13.06.2024
+                  author: 
+                    description: Идентификатор автора реестра 
+                    type: integer
+                    format: int16
+                    example: 5
+                  registriesID:
+                    description: Идентификатор реестра для поиска по ключу в базе данных
+                    type: integer
+                    format: int64
+                    example: 11
+
+  /registries/create:
+    post:
+      tags: 
+        - registries
+      summary: Создание нового реестра
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Registry'
+      security:
+        - operator:
+          - basic-scope          
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                description: Идентификатор нового реестра
+                format: int64
+                example: 12
+  /registries/{registryID}:
+    get:
+      tags: 
+       - registries
+      summary: Получить полный набор данных о реестре для расчёта стоимости и формирования документов
+      parameters:
+        - name: registryID
+          required: true
+          description: Идентификатор реестра
+          in: path
+          schema: 
+            type: integer
+            format: int64
+            example: 11
+      responses:
+        "200": 
+          description: Возвращает реестр
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Registry" 
+    post:
+      tags: 
+       - registries
+      summary: Обновить данные о реестре
+      parameters:
+        - name: registryID
+          description: Идентификатор реестра
+          required: true
+          in: path
+          schema: 
+            type: integer
+            format: int64
+            example: 11
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Registry'
+      responses:
+        "200": 
+          description: ОК
+      security:
+        - operator:
+          - basic-scope
+    delete: 
+      tags: 
+       - registries
+      summary: Удалить реестр из представления пользователя (перенести в архиную таблицу в БД)
+      parameters:
+        - name: registryID
+          required: true
+          description: Идентификатор реестра
+          in: path
+          schema: 
+            type: integer
+            format: int64
+            example: 11
+      responses:
+        "200": 
+          description: ОК
+      security:
+        - operator:
+          - basic-scope
+  /registries/{registryID}/applyAction:
+    post:
+      tags:
+        - registries
+      summary: Изменить статус реестра через действие (Отправить на согласование, согласовать, отказать, поставить на ожидание)
+      parameters:
+        - name: registryID
+          description: Идентификатор реестра
+          required: true
+          in: path
+          schema: 
+            type: integer
+            format: int64
+            example: 11
+        - name: action
+          in: query
+          required: true
+          description: Целевое действие. Передаётся кодом, разбирается в енам
+          schema: 
+            type: integer
+            format: int16
+            example: 1
+      responses:
+        "200": 
+          description: ОК
+      security:
+        - operator:
+          - basic-scope
+
+  /registries/clients:
+    get: 
+      tags:
+        - registries 
+      summary: Получить список клиентов для заполнения реестра
+      parameters:
+        - name: search
+          required: false
+          description: Строка для поиска клиента в списке. Может включать название/имя клиента или номер документа.
+          in: query
+          schema: 
+            type: string
+            format: string
+            example: Ромашка
+      security:
+      - operator:
+        - basic-scope
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name: 
+                    description: Название/имя клиента
+                    type: string
+                    format: string
+                    example: ООО "Ромашка"
+                  document:
+                    description: Номер документа (ИНН или серия и номер паспорта)
+                    type: string
+                    format: string
+                    example: 012345678901
+                  clientID:
+                    description: Идентификатор клиента
+                    type: integer
+                    format: int64
+                    example: 11
+  /data/clients:
+    get: 
+      tags:
+        - data 
+      summary: Получить список клиентов для меню выбора клиентов на экраен справочной информации
+      parameters:
+        - name: search
+          required: false
+          description: Строка для поиска клиента в списке. Может включать название/имя клиента или номер документа.
+          in: query
+          schema: 
+            type: string
+            format: string
+            example: Ромашка
+      security:
+        - operator:
+          - basic-scope
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name: 
+                    description: Название/имя клиента
+                    type: string
+                    format: string
+                    example: ООО "Ромашка"
+                  document:
+                    description: Номер документа (ИНН или серия и номер паспорта)
+                    type: string
+                    format: string
+                    example: 012345678901
+                  clientID:
+                    description: Идентификатор клиента
+                    type: integer
+                    format: int64
+                    example: 11
+                  manager:
+                    description: Имя ответственного менеджера
+                    type: string
+                    format: string
+                    example: Василиса Васильева
+  /data/clients/create:
+    post:
+      tags:
+        - data
+      summary: Создание новой записи о клиенте в базе справочной информации
+      security:
+        - admin:
+          - extended-scope 
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                description: Идентификатор нового клиента
+                format: int64
+                example: 12
+        
+  /data/clients/{clientID}:
+    get:
+      tags:
+        - data
+      summary: Получить полную о информацию клиенте для заполнения формы справочных данных
+      parameters:
+        - name: clientID
+          required: true
+          in: path
+          schema: 
+           type: integer
+           format: int64
+           example: 11
+      security:
+        - operator:
+          - basic-scope  
+      responses:
+        "200":
+          description: ОК - возвращает данные клиента
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Client'
+    post:
+      tags:
+        - data
+      summary: Обновить информацию о клиенте
+      parameters:
+        - name: clientID
+          required: true
+          in: path
+          schema: 
+           type: integer
+           format: int64
+           example: 11
+      requestBody: 
+        content:
+          application/json:
+              schema: 
+                $ref: '#/components/schemas/Client'
+      security:
+        - admin:
+          - extended-scope  
+      responses:
+        "200":
+          description: ОК 
+
+  /data/clients/{clientID}/applyAction:
+    post: 
+      tags:
+        - data
+      summary: Изменение статуса (активно, архив) через действие
+      parameters:
+        - name: action
+          in: query
+          description: Требуемое действие. 0 - Перенести в активные, 1 - Перенести в архивные
+          required: true
+          schema:
+            enum:
+              - 0
+              - 1
+            type: integer
+      security:
+        - admin:
+          - extended-scope  
+      responses:
+        "200":
+          description: OK
+
+  /data/forwarders/create:
+    post:
+      tags: 
+        - data
+      summary: Добавить запись о новом перевозчике (юридическом лице в справочную базу)
+      security:
+        - admin:
+          - extended-scope
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/Forwarder"
+      responses:
+        "200":
+          description: OK
+
+  /data/forwarders:
+    get:
+      tags: 
+        - data
+      summary: Получить список перевозчиков (краткой информации для меню выбора в справочной базе)
+      security:
+        - operator:
+          - basic-scope
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  forwarderID:
+                    type: integer
+                    format: int16
+                    example: 1
+                  INN:
+                    type: string
+                    maxLength: 12
+                    example: "1234567890"
+                  name:
+                    type: string
+                    example: ООО "ТЭКО-Н"
+
+
+  /data/forwarders/{forwarderID}:
+    get:
+      tags: 
+        - data
+      summary: Получить запись о перевозчике
+      parameters:
+        - name: forwarderID
+          required: true
+          in: path
+          schema: 
+            type: integer
+            format: int16
+            example: 1
+      security:
+        - operator:
+          - basic-scope
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Forwarder"
+    post:
+      tags: 
+        - data
+      summary: Обновить запись о перевозчике
+      parameters:
+        - name: forwarderID
+          required: true
+          in: path
+          schema: 
+            type: integer
+            format: int16
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/Forwarder"
+      security:
+        - admin:
+          - extended-scope
+      responses:
+        "200":
+          description: OK
+
+  /data/additionalPackagePrices:
+    get:
+      tags: 
+        - data
+      summary: Получить расценки дополнительной упаковки
+      security:
+        - operator:
+          - basic-scope
+      responses:
+        "200":
+          description: OK - возвращает расценки
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  addPackPriceId:
+                    type: integer
+                    format: int32
+                    example: 1
+                  type:
+                    type: string
+                    maxLength: 30
+                    example: "Type of package"
+                  countsAsVolume:
+                    type: boolean
+                    example: true
+                  prices:
+                    type: object
+                    example: '{"price1": 10, "price2": 20}'
+    post:
+      tags: 
+        - data
+      summary: Обновить расценки дополнительной упаковки
+      security:
+        - admin:
+          - extended-scope
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                addPackPriceId:
+                  type: integer
+                  format: int32
+                  example: 1
+                type:
+                  type: string
+                  maxLength: 30
+                  example: "Type of package"
+                countsAsVolume:
+                  type: boolean
+                  example: true
+                prices:
+                  type: object
+                  example: '{"price1": 10, "price2": 20}'
+      responses:
+        "200":
+          description: OK
+                
+  /data/oversizePrices:
+    get:
+      tags: 
+        - data
+      summary: Получить расценки негабарита
+      security:
+        - operator:
+          - basic-scope
+      responses:
+        "200":
+          description: OK - возвращает расценки
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  oPriceId:
+                    type: integer
+                    format: int32
+                    example: 1
+                  countsAsVolume:
+                    type: boolean
+                    example: true
+                  percentRaise:
+                    type: number
+                    format: float
+                    example: 0.1
+                  absoluteRaise:
+                    type: number
+                    format: float
+                    example: 10.0
+    post:
+      tags: 
+        - data
+      summary: Обновить расценки негабарита
+      security:
+        - admin:
+          - extended-scope
+      requestBody:
+        content:
+          application/json:  
+            schema: 
+                type: object
+                properties:
+                  oPriceId:
+                    type: integer
+                    format: int32
+                    example: 1
+                  countsAsVolume:
+                    type: boolean
+                    example: true
+                  percentRaise:
+                    type: number
+                    format: float
+                    example: 0.1
+                  absoluteRaise:
+                    type: number
+                    format: float
+                    example: 10.0
+      responses:
+        "200":
+          description: OK
+              
+  /data/forwardingPrices:
+    get:
+      tags: 
+        - data
+      summary: Получить расценки перевозки
+      security:
+        - operator:
+          - basic-scope
+      responses:
+        "200":
+          description: OK - возвращает расценки
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  fPriceId:
+                    type: integer
+                    format: int32
+                    example: 1
+                  countsForVolume:
+                    type: boolean
+                    example: true
+                  gradationCeiling:
+                    type: number
+                    format: float
+                    example: 100.0
+                  price:
+                    type: number
+                    format: float
+                    example: 10.0
+    post:
+      tags: 
+        - data
+      summary: Обновить расценки перевозки
+      security:
+        - admin:
+          - extended-scope
+      requestBody:
+        content:
+          application/json:  
+            schema: 
+                type: object
+                properties:
+                  fPriceId:
+                    type: integer
+                    format: int32
+                    example: 1
+                  countsForVolume:
+                    type: boolean
+                    example: true
+                  gradationCeiling:
+                    type: number
+                    format: float
+                    example: 100.0
+                  price:
+                    type: number
+                    format: float
+                    example: 10.0
+      responses:
+        "200":
+          description: OK
+####################
+  /users:
+    post:
+      tags: 
+        - users
+      summary: Регистрация пользователя
+      requestBody:
+        content:
+          application/json:  
+            schema: 
+                type: object
+                properties:
+                  login:
+                    type: string
+                    maxLength: 20
+                    example: "user123"
+                  name:
+                    type: string
+                    maxLength: 20
+                    example: "Анна"
+                  surname:
+                    type: string
+                    maxLength: 20
+                    example: "Иванова"
+                  position:
+                    type: string
+                    maxLength: 50
+                    example: "Директор"
+                  password:
+                    type: string
+                    example: "password"
+                  roleId:
+                    type: integer
+                    format: int32
+                    example: 1
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  userId:
+                    type: integer
+                    format: int32
+                    example: 1
+
+  /users/login:
+    post:
+      tags: 
+        - users
+      summary: Авторизация пользователя
+      requestBody:
+        content:
+          application/json:  
+            schema: 
+                type: object
+                properties:
+                  login:
+                    type: string
+                    maxLength: 20
+                    example: "user123"
+                  password:
+                    type: string
+                    example: "password"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  userId:
+                    type: integer
+                    format: int32
+                    example: 1
+                  name:
+                    type: string
+                    maxLength: 20
+                    example: "John"
+                  surname:
+                    type: string
+                    maxLength: 20
+                    example: "Doe"
+                  position:
+                    type: string
+                    maxLength: 50
+                    example: "Manager"
+                  roleId:
+                    type: integer
+                    format: int32
+                    example: 1
+####################
+####################
+####################
+components:
+  schemas:
+    Registry:
+      type: object
+      properties:
+        RegistryID:
+          type: integer
+          format: int64
+          example: 1
+        RegistryCode:
+          type: string
+          maxLength: 15
+          example: "REG-001"
+        ContainerCode:
+          type: string
+          maxLength: 15
+          example: "CONT-001"
+        IsCombined:
+          type: boolean
+          example: true
+        ShippingDate:
+          type: string
+          format: DD.MM.YYYY
+          example: 13.06.2024
+        ArrivalDate:
+          type: string
+          format: DD.MM.YYYY
+          example: 13.06.2024
+        TargetCity:
+          type: string
+          maxLength: 15
+          example: "New York"
+        LastEditedTime:
+          type: string
+          format: DD.MM.YYYY
+          example: 13.06.2024-time
+        StatusID:
+          type: integer
+          format: int32
+          example: 1
+        Author:
+          type: integer
+          format: int32
+          example: 1
+        LastEditor:
+          type: integer
+          format: int32
+          example: 1
+    Manager: 
+      type: object
+      properties:
+        managerID:
+          type: integer
+          format: int16
+          example: 1
+        managerName:
+          type: string
+          format: string
+          example: Имя Фамилия
+
+    Client: 
+      type: object  
+      properties:
+        manager:
+          $ref: "#/components/schemas/Manager"
+        notes:
+          type: string
+          example: "Заметки о клиенте"
+        minimalCostCalculates:
+          type: boolean
+          example: true
+        entersCalculate:
+          type: boolean
+          example: true
+        addPackagingCalculates:
+          type: boolean
+          example: true
+        oversizeCalculates:
+          type: boolean
+          example: true
+        personalPrices:
+          type: object
+          example: JSON схема с частными ценами для клиента. Структуру необходимо уточнить.
+        forwarderID:
+          type: integer
+          format: int32
+          example: 1
+        clientID:
+          type: integer
+          format: int64
+          example: 11
+        name:
+          type: string
+          maxLength: 60
+          example: ООО "Ромашка"
+        document:
+          description: Номер документа (ИНН или серия и номер паспорта)
+          type: string
+          format: string
+          example: 012345678901
+  
+    Forwarder:
+      type: object
+      properties:
+        forwarderID:
+          type: integer
+          format: int16
+          example: 1
+        INN:
+          type: string
+          maxLength: 12
+          example: "1234567890"
+        name:
+          type: string
+          example: ООО "ТЭКО-Н"
+        KPP:
+          type: string
+          maxLength: 9
+          example: "123456789"
+        OGRN:
+          type: string
+          maxLength: 13
+          example: "1234567890123"
+        paymentAccount:
+          type: string
+          maxLength: 20
+          example: "1234567890123456789"
+        OKPO:
+          type: string
+          maxLength: 8
+          example: "12345678"
+        Bank:
+          type: string
+          example: "Bank Name"
+        CorrespondentAccount:
+          type: string
+          maxLength: 20
+          example: "1234567890123456789"
+        BIK:
+          type: string
+          maxLength: 9
+          example: "123456789"
+        CEOFullName:
+          type: string
+          example: "Анна Ивановна Иванова"
+        accountantFullName:
+          type: string
+          example: "Наталья Ивановна Иванова"
+        NDFLCalculates:
+          type: boolean
+          example: true
+        JuridicalAddress:
+          type: string
+          example: "Новосибирская область, г. Новосибирск, Железнодорожный район, ул. 1905 года, 71"
+  
+  
+  securitySchemes:
+    operator:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: add-later
+          scopes:
+            basic-scope: Просмотр, создание и изменение реестров. Генерация отчётов. 
+    admin:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: add-later
+          scopes:
+            extended-scope: Просмотр, создание и изменение реестров. Генерация отчётов. Управление учётными записями пользователей. Редактирование справочной информации.
+            
